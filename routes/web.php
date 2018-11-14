@@ -1,0 +1,44 @@
+<?php
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
+//Route::get('/', 'HomeController@index');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/articles','ArticleController@index');
+
+Route::group(['namespace'=>'Admin', 'prefix'=>'admin'], function(){
+    Route::get('login', 'LoginController@index')->name('login.admin');
+    Route::post('login','LoginController@login');
+    Route::post('logout','LoginController@logout')->name('logout.admin');
+
+    Route::group(['middleware' => 'auth.admin'], function () {
+        Route::get('/', 'HomeController@index')->name('home.admin');
+        Route::get('userlistpage', 'AppManageController@userlistpage');
+
+        Route::post('userlist', 'AppManageController@userlist');
+        Route::post('orderlist', 'AppManageController@orderlist');
+
+        Route::post('sysconfig', 'HomeController@sysconfig');
+        Route::post('sysuser', 'HomeController@sysuser');
+        Route::post('general', 'HomeController@general');
+        Route::post('buttons', 'HomeController@buttons');
+        Route::post('panels', 'HomeController@panels');
+    });
+});
