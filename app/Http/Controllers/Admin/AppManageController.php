@@ -11,16 +11,32 @@ class AppManageController extends Controller
 {
     //
     public function userlist (Request $request) {
-        $users = AppUserInfo::paginate(1)->withPath('admin/userlistpage');
+        if ($request->filled('cid')) {
+            $cid = $request->cid;    
+        }
 
+        if (isset($cid)) {
+            if ($cid == 'module') {
+                $tplName = 'admin.partial_userlist';    
+            } else if ($cid == 'userlist'){
+                $tplName = 'admin.partial_userlistpage';    
+            }
 
-        return view('admin.partial_userlist', compact('users'));
+            if (isset($tplName)) {
+                $users = AppUserInfo::paginate(3);
+                return view($tplName, compact('users'));
+            }
+        }
     }
 
-    public function userlistpage (Request $request) {
-        $users = AppUserInfo::paginate(1)->withPath('admin/userlistpage');
+    public function userinfo (Request $request) {
+        if ($request->filled('uid')) {
+            $uid = $request->uid;
 
-        return view('admin.partial_userlistpage',compact('users'));
+            $user = AppUserInfo::find($uid);
+
+            return view('admin.partial_userinfo',compact('user'));
+        }
     }
 
     public function orderlist () {

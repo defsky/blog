@@ -3,17 +3,35 @@
           	<div class="row mt">
           		<div class="col-lg-12">
 	                <div class="content-panel">
+	                    <hr>
+                        <div id="userlist">
 
-	                <hr>
-                    <div id="userlist">
+                            @include('admin.partial_userlistpage')
 
-                        @include('admin.partial_userlistpage');
-
-                    </div>
-	                 </div><!--/content-panel -->
+                        </div>
+	                </div><!--/content-panel -->
           		</div>
           	</div>
-			
+			<!-- Modal -->
+			<div class="modal fade" id="userinfoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			        <h4 class="modal-title" id="myModalLabel">{{ __('User Info')}}</h4>
+			      </div>
+			      <div class="modal-body">
+                    <div id="userinfopanel">
+			            Hi there, Modal Content here.
+                    </div>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">{{ __('Close') }}</button>
+			        <button type="button" class="btn btn-primary">{{ __('Save') }}</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>      				
 		</section><!--/wrapper -->
 
     <!--script for this page-->
@@ -21,29 +39,6 @@
   <script>
       //custom select box
 
-     $('#userlist .pagination a').click(function (e) {
-        e.preventDefault();
-        var url=$(this).attr('href');
-
-        $('#userlist').append('\<div class="overlay"\> \<i class="fa fa-refresh fa-spin"\>\<\/i\> \<\/div\>');
-
-        $.ajax({
-            url :url,
-            data : {}
-        }).done(function (data) {
-            $('#userlist').html(data);
-        }).fail(function () {
-            $.gritter.add({
-               title:'Server Error',
-               text:'load table data failed',
-               image:'../assets/img/ui-sam.jpg',
-               sticky:false, 
-               time:''
-            });
-        });
-        
-        //window.history.pushState("", "",url);
-     });
 
       $(function(){
           $('select.styled').customSelect();

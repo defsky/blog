@@ -30,10 +30,8 @@ Route::group(['namespace'=>'Admin', 'prefix'=>'admin'], function(){
 
     Route::group(['middleware' => 'auth.admin'], function () {
         Route::get('/', 'HomeController@index')->name('home.admin');
-        Route::get('userlistpage', 'AppManageController@userlistpage');
-
-        Route::post('userlist', 'AppManageController@userlist');
-        Route::post('orderlist', 'AppManageController@orderlist');
+        Route::get('userlist', 'AppManageController@userlist');
+        Route::get('userinfo', 'AppManageController@userinfo');
 
         Route::post('sysconfig', 'HomeController@sysconfig');
         Route::post('sysuser', 'HomeController@sysuser');

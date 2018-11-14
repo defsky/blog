@@ -109,9 +109,21 @@
 					
                     if ($path = $(this).data('path'))
                     {
-                        $.post('/admin/' + $path, function (content) {
+                        //$.post('/admin/' + $path, function (content) {
+                        //    $('#main-content').html(content);
+                        //}); 
+                        $.ajax({
+                            url:'/admin/' + $path,
+                            data:{cid:'module'}
+                        }).done(function (content) {
                             $('#main-content').html(content);
-                        }); 
+                        }).fail(function () {
+                            $.gritter.add({
+                                title:'系统错误',
+                                text:'页面加载失败',
+                                sticky:false   
+                            }) 
+                        });
                     }              
 //					// Write cookie if save state is on
 //					if(defaults.saveState == true){

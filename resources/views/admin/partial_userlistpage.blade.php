@@ -30,7 +30,10 @@
 	                            <td>{{ $user->data->activity }}</td>
 	                            <td>{{ $user->data->yesterday_activity }}</td>
                                 <td>
-                                    <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
+                                    <button class="btn btn-primary btn-xs btn-useredt"
+                                        data-toggle="modal"
+                                        data-target="#userinfoModal"
+                                        data-id="{{ $user->number }}"><i class="fa fa-pencil"></i></button>
                                 </td>
 	                        </tr>
 
@@ -44,32 +47,51 @@
   <script>
       //custom select box
 
-     $('#userlist .pagination a').click(function (e) {
-        e.preventDefault();
-        var url=$(this).attr('href');
-
-        $('#userlist').append('\<div class="overlay"\> \<i class="fa fa-refresh fa-spin"\>\<\/i\> \<\/div\>');
+    $('#userlist .btn-useredt').click(function (e) {
+        $uid = $(this).data('id');
 
         $.ajax({
-            url :url,
-            data : {}
+            url :'/admin/userinfo',
+            data : {uid:$uid}
         }).done(function (data) {
-            $('#userlist').html(data);
+            $('#userinfopanel').html(data);
         }).fail(function () {
             $.gritter.add({
-               title:'Server Error',
-               text:'load table data failed',
-               image:'../assets/img/ui-sam.jpg',
-               sticky:false, 
-               time:''
-            });
+               title:"系统错误",
+               text:"加载用户信息失败",
+               image:'../assets/img/ui-danro.jpg',
+               sticky:false,
+               time:'' 
+            });    
         });
-        
-        //window.history.pushState("", "",url);
-     });
+    });
+     
+    $('#userlist .pagination a').click(function (e) {
+       e.preventDefault();
+       var url=$(this).attr('href');
 
-      $(function(){
-          $('select.styled').customSelect();
-      });
+       $('#userlist').append('\<div class="overlay"\> \<i class="fa fa-refresh fa-spin"\>\<\/i\> \<\/div\>');
+
+       $.ajax({
+           url :url,
+           data : {cid:'userlist'}
+       }).done(function (data) {
+           $('#userlist').html(data);
+       }).fail(function () {
+           $.gritter.add({
+              title:'Server Error',
+              text:'load table data failed',
+              image:'../assets/img/ui-sam.jpg',
+              sticky:false, 
+              time:''
+           });
+       });
+       
+       //window.history.pushState("", "",url);
+    });
+
+     $(function(){
+         $('select.styled').customSelect();
+     });
 
   </script>
