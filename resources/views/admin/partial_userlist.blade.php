@@ -27,7 +27,7 @@
 			      </div>
 			      <div class="modal-footer">
 			        <button type="button" class="btn btn-default" data-dismiss="modal">{{ __('Close') }}</button>
-			        <button type="button" class="btn btn-primary">{{ __('Save') }}</button>
+			        <button type="button" class="btn btn-primary" id="btn-saveuserinfo">{{ __('Save') }}</button>
 			      </div>
 			    </div>
 			  </div>
@@ -39,6 +39,31 @@
   <script>
       //custom select box
 
+    $('#btn-saveuserinfo').click(function (e) {
+        $data = $('#form-userinfo').serialize();
+
+        $.ajax({
+            type:'POST',
+            url :'/admin/saveuserinfo',
+            data : $data,
+        }).done(function (msg) {
+            $.gritter.add({
+               title:"系统提示",
+               text:"UUID：" + msg + "<br />用户信息保存成功!",
+               image:'../assets/img/ui-danro.jpg',
+               sticky:false,
+               time:'' 
+            });    
+        }).fail(function () {
+            $.gritter.add({
+               title:"系统提示",
+               text:"用户信息保存失败",
+               image:'../assets/img/ui-danro.jpg',
+               sticky:false,
+               time:'' 
+            });    
+        });
+    });
 
       $(function(){
           $('select.styled').customSelect();

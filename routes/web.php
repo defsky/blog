@@ -31,12 +31,17 @@ Route::group(['namespace'=>'Admin', 'prefix'=>'admin'], function(){
     Route::group(['middleware' => 'auth.admin'], function () {
         Route::get('/', 'HomeController@index')->name('home.admin');
         Route::get('userlist', 'AppManageController@userlist');
+        Route::get('orderlist', 'AppManageController@orderlist');
         Route::get('userinfo', 'AppManageController@userinfo');
 
-        Route::post('sysconfig', 'HomeController@sysconfig');
-        Route::post('sysuser', 'HomeController@sysuser');
-        Route::post('general', 'HomeController@general');
-        Route::post('buttons', 'HomeController@buttons');
-        Route::post('panels', 'HomeController@panels');
+        Route::post('saveuserinfo', 'AppManageController@saveuserinfo');
+        Route::get('saveuserinfo', 'AppManageController@saveuserinfo');
+
+        Route::get('sysconfig', 'HomeController@sysconfig');
+        Route::get('sysuser', 'HomeController@sysuser');
+        Route::get('general', 'HomeController@general');
+        Route::get('buttons', 'HomeController@buttons');
+        Route::get('panels', 'HomeController@panels');
+
     });
 });
