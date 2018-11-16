@@ -18,7 +18,7 @@
 
                             @foreach ($users as $user)
 
-	                        <tr>
+	                        <tr id="user{{ $user->number }}">
 	                            <td>{{ $user->uuid }}</td>
 	                            <td>{{ $user->phone }}</td>
 	                            <td>{{ $user->invate_code }}</td>

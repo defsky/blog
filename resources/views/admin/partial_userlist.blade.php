@@ -40,13 +40,35 @@
       //custom select box
 
     $('#btn-saveuserinfo').click(function (e) {
-        $data = $('#form-userinfo').serialize();
+        $data = $('#form-userinfo').serializeArray();
+        $uid = $data[1].value;
 
         $.ajax({
             type:'POST',
             url :'/admin/saveuserinfo',
             data : $data,
         }).done(function (msg) {
+            $tds = $('#user'+$uid+'>td');
+            $.each($data,function(){
+                switch (this.name) {
+                    case 'phonenumber':
+                        $tds[1].textContent = this.value;
+                        break;
+                    case 'nickname':
+                        $tds[3].textContent = this.value;
+                        break;
+                    case 'creditlevel':
+                        $tds[5].textContent = this.value;
+                        break;
+                    case 'activitycoin':
+                        $tds[6].textContent = this.value;
+                        break;
+                    case 'originalcoin':
+                        $tds[7].textContent = this.value;
+                        break;
+                }    
+            });
+
             $.gritter.add({
                title:"系统提示",
                text:"UUID：" + msg + "<br />用户信息保存成功!",
