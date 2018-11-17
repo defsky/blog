@@ -2,14 +2,32 @@
           	<h3><i class="fa fa-angle-right"></i> {{ __('User List') }}</h3>
           	<div class="row mt">
           		<div class="col-lg-12">
-	                <div class="content-panel">
-	                    <hr>
+                    <div class="form-panel">
+                        <form class="form-inline" role="form" id="form-searchuser">
+                           <div class="form-group">
+                               <label class="sr-only" for="kwtype">{{ __("Property") }}</label>
+                               <select class="form-control" id="kwtype" name="kwtype">
+                                   @foreach ( $userKwTypes as $value => $text)
+                                       <option value="{{ $value }}" {{ $kwtype == $value ? 'selected':''}}>{{ __($text) }}</option>
+                                   @endforeach
+                               </select>
+                           </div>
+                            <div class="form-group">
+                                <label class="sr-only" for="kwinput">{{ __('Keyword') }}</label>
+                                <input class="form-control" name="kw" type="text" placeholder="{{ __('Keyword')}}" id="kwinput">
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-theme" id="btn-search">{{ __('Search') }}</button>
+                            </div>
+                        </form>
+                    </div><!--/form-panel-->
+	                <div class="form-panel">
                         <div id="userlist">
 
                             @include('admin.partial_userlistpage')
 
                         </div>
-	                </div><!--/content-panel -->
+                    </div><!--/form-panel-->
           		</div>
           	</div>
 			<!-- Modal -->
@@ -22,7 +40,7 @@
 			      </div>
 			      <div class="modal-body">
                     <div id="userinfopanel">
-			            Hi there, Modal Content here.
+			            <div class="overlay"><i class="fa fa-refresh fa-spin"></i></div>
                     </div>
 			      </div>
 			      <div class="modal-footer">
@@ -38,6 +56,29 @@
     
   <script>
       //custom select box
+    $('#btn-search').click(function (e) {
+        e.preventDefault();
+        $data = $('#form-searchuser').serializeArray();
+
+        $.ajax({
+            url :'/admin/userlist',
+            data : {
+                cid:'userlist',
+                kw:$('#kwinput')[0].value,
+                kwtype:$('#kwtype')[0].value
+            }
+        }).done(function (data) {
+            $('#userlist').html(data);
+        }).fail(function () {
+            $.gritter.add({
+               title:"系统错误",
+               text:"查找用户信息失败",
+               image:'../assets/img/ui-danro.jpg',
+               sticky:false,
+               time:'' 
+            });    
+        });
+    });
 
     $('#btn-saveuserinfo').click(function (e) {
         $data = $('#form-userinfo').serializeArray();

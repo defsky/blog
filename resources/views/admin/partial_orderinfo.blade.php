@@ -23,7 +23,7 @@
                                                 <div class="form-group">
                                                     <label class="col-sm-3 control-label" for="">{{ __("Appeal Date") }}</label>
                                                     <div class="col-sm-9">
-                                                        <p class="form-control-static">{{ __($order->date) }}</p>
+                                                        <p class="form-control-static">{{ date('Y-m-d H:i:s', strtotime($order->date)) }}</p>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">

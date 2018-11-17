@@ -16,29 +16,32 @@
 	                        </thead>
 	                        <tbody>
 
-                            @foreach ($orders as $order)
+                            @if (0 == sizeof($orders))
+                                <tr><td colspan="11" class="centered">{{ __('No Data') }}</td></tr>
+                            @else
+                                @foreach ($orders as $order)
 
-	                        <tr id="{{ $order->trade_number }}">
-	                            <td>{{ $order->trade_number }}</td>
-	                            <td>{{ $order->date }}</td>
-	                            <td>{{ $order->type }}</td>
-	                            <td>{{ $order->coins }}</td>
-	                            <td>{{ $order->money }}</td>
-	                            <td>{{ $order->uuid_sell }}</td>
-	                            <td>{{ $order->nick_name_sell }}</td>
-	                            <td>{{ $order->uuid_buy }}</td>
-	                            <td>{{ $order->nick_name_buy }}</td>
-	                            <td>{{ $order->appeal_status }}</td>
-                                <td>
-                                    <button class="btn btn-primary btn-xs btn-orderedt"
-                                        data-toggle="modal"
-                                        data-target="#orderinfoModal"
-                                        data-id="{{ $order->trade_number }}"><i class="fa fa-pencil"></i></button>
-                                </td>
-	                        </tr>
+	                            <tr id="{{ $order->trade_number }}">
+	                                <td>{{ $order->trade_number }}</td>
+	                                <td>{{ date('Y-m-d H:i:s',strtotime($order->date)) }}</td>
+	                                <td>{{ $order->type }}</td>
+	                                <td>{{ $order->coins }}</td>
+	                                <td>{{ $order->money }}</td>
+	                                <td>{{ $order->uuid_sell }}</td>
+	                                <td>{{ $order->nick_name_sell }}</td>
+	                                <td>{{ $order->uuid_buy }}</td>
+	                                <td>{{ $order->nick_name_buy }}</td>
+	                                <td>{{ $order->appeal_status }}</td>
+                                    <td>
+                                        <button class="btn btn-primary btn-xs btn-orderedt"
+                                            data-toggle="modal"
+                                            data-target="#orderinfoModal"
+                                            data-id="{{ $order->trade_number }}"><i class="fa fa-pencil"></i></button>
+                                    </td>
+	                            </tr>
 
-                            @endforeach
-
+                                @endforeach
+                            @endif
 	                        </tbody>
 	                    </table>
 
@@ -74,7 +77,13 @@
 
        $.ajax({
            url :url,
-           data : {cid:'orderlist'}
+           data : {
+               cid:'orderlist',
+           @if ('' != $kw)
+               kw:'{{$kw }}',
+               kwtype:'{{$kwtype }}'
+           @endif
+           }
        }).done(function (data) {
            $('#orderlist').html(data);
        }).fail(function () {

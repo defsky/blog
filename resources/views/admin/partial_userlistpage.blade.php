@@ -16,29 +16,32 @@
 	                        </thead>
 	                        <tbody>
 
-                            @foreach ($users as $user)
+                            @if (0 == sizeof($users))
+                                <tr><td colspan="11" class="centered">{{ __('No Data') }}</td></tr>
+                            @else
+                                @foreach ($users as $user)
 
-	                        <tr id="user{{ $user->number }}">
-	                            <td>{{ $user->uuid }}</td>
-	                            <td>{{ $user->phone }}</td>
-	                            <td>{{ $user->invate_code }}</td>
-	                            <td>{{ $user->nick_name }}</td>
-	                            <td>{{ $user->user_type }}</td>
-	                            <td>{{ $user->data->credit }}</td>
-	                            <td>{{ $user->data->activity_coin }}</td>
-	                            <td>{{ $user->data->original_coin }}</td>
-	                            <td>{{ $user->data->activity }}</td>
-	                            <td>{{ $user->data->yesterday_activity }}</td>
-                                <td>
-                                    <button class="btn btn-primary btn-xs btn-useredt"
-                                        data-toggle="modal"
-                                        data-target="#userinfoModal"
-                                        data-id="{{ $user->number }}"><i class="fa fa-pencil"></i></button>
-                                </td>
-	                        </tr>
+	                            <tr id="user{{ $user->number }}">
+	                                <td>{{ $user->uuid }}</td>
+	                                <td>{{ $user->phone }}</td>
+	                                <td>{{ $user->invate_code }}</td>
+	                                <td>{{ $user->nick_name }}</td>
+	                                <td>{{ $user->user_type }}</td>
+	                                <td>{{ $user->data->credit }}</td>
+	                                <td>{{ $user->data->activity_coin }}</td>
+	                                <td>{{ $user->data->original_coin }}</td>
+	                                <td>{{ $user->data->activity }}</td>
+	                                <td>{{ $user->data->yesterday_activity }}</td>
+                                    <td>
+                                        <button class="btn btn-primary btn-xs btn-useredt"
+                                            data-toggle="modal"
+                                            data-target="#userinfoModal"
+                                            data-id="{{ $user->number }}"><i class="fa fa-pencil"></i></button>
+                                    </td>
+	                            </tr>
 
-                            @endforeach
-
+                                @endforeach
+                            @endif
 	                        </tbody>
 	                    </table>
 
@@ -74,7 +77,13 @@
 
        $.ajax({
            url :url,
-           data : {cid:'userlist'}
+           data : {
+               cid:'userlist',
+               @if ('' != $kw)
+               kw:'{{ $kw }}',
+               kwtype:'{{ $kwtype }}'
+               @endif
+           }
        }).done(function (data) {
            $('#userlist').html(data);
        }).fail(function () {

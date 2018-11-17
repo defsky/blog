@@ -2,14 +2,32 @@
           	<h3><i class="fa fa-angle-right"></i> {{ __('Order List') }}</h3>
           	<div class="row mt">
           		<div class="col-lg-12">
-	                <div class="content-panel">
-	                    <hr>
+                    <div class="form-panel">
+                        <form class="form-inline" action="" role="form" id="form-searchorder">
+                           <div class="form-group">
+                               <label class="sr-only" for="kwtype">{{ __("Property") }}</label>
+                               <select class="form-control" id="kwtype" name="kwtype">
+                                   @foreach ( $orderKwTypes as $value => $text)
+                                       <option value="{{ $value }}" {{ $kwtype == $value ? 'selected':''}}>{{ __($text) }}</option>
+                                   @endforeach
+                               </select>
+                           </div>
+                            <div class="form-group">
+                                <label class="sr-only" for="kwinput">{{ __('Keyword') }}</label>
+                                <input class="form-control" type="keyword" placeholder="{{ __('Keyword')}}" id="kwinput">
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-theme" id="btn-search">{{ __('Search') }}</button>
+                            </div>
+                        </form>
+                    </div><!--/form-panel-->
+	                <div class="form-panel">
                         <div id="orderlist">
 
                             @include('admin.partial_orderlistpage')
 
                         </div>
-	                </div><!--/content-panel -->
+	                </div><!--/form-panel -->
           		</div>
           	</div>
 			<!-- Modal -->
@@ -22,7 +40,7 @@
 			      </div>
 			      <div class="modal-body">
                     <div id="orderinfopanel">
-			            Hi there, Modal Content here.
+			            <div class="overlay"><i class="fa fa-refresh fa-spin"></i></div>
                     </div>
 			      </div>
 			      <div class="modal-footer">
@@ -38,6 +56,28 @@
     
   <script>
       //custom select box
+    $('#btn-search').click(function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            url :'/admin/orderlist',
+            data : {
+                cid:'orderlist',
+                kw:$('#kwinput')[0].value,
+                kwtype:$('#kwtype')[0].value
+            }
+        }).done(function (data) {
+            $('#orderlist').html(data);
+        }).fail(function () {
+            $.gritter.add({
+               title:"系统错误",
+               text:"查找订单信息失败",
+               image:'../assets/img/ui-danro.jpg',
+               sticky:false,
+               time:'' 
+            });    
+        });
+    });
 
     $('#btn-saveorderinfo').click(function (e) {
         $data = $('#form-orderinfo').serializeArray();
@@ -59,7 +99,7 @@
 
             $.gritter.add({
                title:"系统提示",
-               text:"UUID：" + msg + "<br />用户信息保存成功!",
+               text:"UUID：" + msg + "<br />订单信息保存成功!",
                image:'../assets/img/ui-danro.jpg',
                sticky:false,
                time:'' 
@@ -67,7 +107,7 @@
         }).fail(function () {
             $.gritter.add({
                title:"系统提示",
-               text:"用户信息保存失败",
+               text:"订单信息保存失败",
                image:'../assets/img/ui-danro.jpg',
                sticky:false,
                time:'' 

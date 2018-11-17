@@ -20,6 +20,14 @@ class AppManageController extends Controller
 
     //用户列表
     public function userlist (Request $request) {
+        $userKwTypes = [
+            'Phone',
+            'UUID'
+        ];
+        $userTableColMap = [
+            'phone',
+            'uuid'
+        ];
 
         if ($request->filled('cid')) {
             $cid = $request->cid;    
@@ -30,15 +38,35 @@ class AppManageController extends Controller
                 $tplName = 'admin.partial_userlistpage';    
             }
 
+            $users = [];
+            $kw = '';
+            $kwtype = '';
             if (isset($tplName)) {
-                $users = AppUserInfo::paginate(3);
-                return view($tplName, compact('users'));
+                if ($request->filled('kw')) {
+                    $kw = $request->kw;
+                    $kwtype = $request->kwtype;
+                    if (isset($userTableColMap[$kwtype])) {
+                        $users = AppUserInfo::whereRaw($userTableColMap[$kwtype].' like ?',[$kw.'%'])->paginate(3); 
+                    }
+                } else {
+                    $users = AppUserInfo::paginate(3);
+                }
+                return view($tplName, compact('users', 'userKwTypes', 'kw', 'kwtype'));
             }
         }
     }
 
     //订单列表
     public function orderlist (Request $request) {
+        $orderKwTypes = [
+            'Phone',
+            'UUID'
+        ];
+        $orderTableColMap = [
+            'pay_phone_sell',
+            'uuid_sell'
+        ];
+
         if ($request->filled('cid')) {
             $cid = $request->cid;    
 
@@ -48,13 +76,24 @@ class AppManageController extends Controller
                 $tplName = 'admin.partial_orderlistpage';    
             }
 
+            $orders = [];
+            $kw = '';
+            $kwtype = '';
             if (isset($tplName)) {
-                $orders = AppOrderInfo::paginate(1);
+                if ($request->filled('kw')) {
+                    $kw = $request->kw;
+                    $kwtype = $request->kwtype;
+                    if (isset($orderTableColMap[$kwtype])) {
+                        $orders = AppOrderInfo::whereRaw($orderTableColMap[$kwtype].' like ?',[$kw.'%'])->paginate(1); 
+                    }
+                } else {
+                    $orders = AppOrderInfo::paginate(1);
+                }
 
                 foreach ($orders as $order) {
                     $order->appeal_status = $this->orderStatus[$order->appeal_status];
                 }
-                return view($tplName, compact('orders'));
+                return view($tplName, compact('orders', 'orderKwTypes', 'kw', 'kwtype'));
             }
         }
     }
