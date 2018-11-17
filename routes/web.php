@@ -33,8 +33,10 @@ Route::group(['namespace'=>'Admin', 'prefix'=>'admin'], function(){
         Route::get('userlist', 'AppManageController@userlist');
         Route::get('orderlist', 'AppManageController@orderlist');
         Route::get('userinfo', 'AppManageController@userinfo');
+        Route::get('orderinfo', 'AppManageController@orderinfo');
 
         Route::post('saveuserinfo', 'AppManageController@saveuserinfo');
+        Route::post('saveorderinfo', 'AppManageController@saveorderinfo');
         Route::get('saveuserinfo', 'AppManageController@saveuserinfo');
 
         Route::get('sysconfig', 'HomeController@sysconfig');

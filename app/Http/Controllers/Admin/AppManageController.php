@@ -6,10 +6,18 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Models\Admin\AppUserInfo;
-use App\Models\Admin\AppUserData;
+use App\Models\Admin\AppOrderInfo;
 
 class AppManageController extends Controller
 {
+    protected $orderStatus = [
+        '初始状态',
+        '确认',
+        '申诉',
+        '补正',
+        '客服处理完成'
+    ];
+
     //用户列表
     public function userlist (Request $request) {
 
@@ -30,8 +38,25 @@ class AppManageController extends Controller
     }
 
     //订单列表
-    public function orderlist () {
-        return view('admin.partial_orderlist');
+    public function orderlist (Request $request) {
+        if ($request->filled('cid')) {
+            $cid = $request->cid;    
+
+            if ($cid == 'module') {
+                $tplName = 'admin.partial_orderlist';    
+            } else if ($cid == 'orderlist'){
+                $tplName = 'admin.partial_orderlistpage';    
+            }
+
+            if (isset($tplName)) {
+                $orders = AppOrderInfo::paginate(1);
+
+                foreach ($orders as $order) {
+                    $order->appeal_status = $this->orderStatus[$order->appeal_status];
+                }
+                return view($tplName, compact('orders'));
+            }
+        }
     }
 
     public function userinfo (Request $request) {
@@ -41,6 +66,16 @@ class AppManageController extends Controller
             $user = AppUserInfo::find($uid);
 
             return view('admin.partial_userinfo',compact('user'));
+        }
+    }
+
+    public function orderinfo (Request $request) {
+        if ($request->filled('uid')) {
+            $uid = $request->uid;
+
+            $order = AppOrderInfo::find($uid);
+
+            return view('admin.partial_orderinfo',['order' => $order, 'orderStatus' => $this->orderStatus]);
         }
     }
 
@@ -97,5 +132,38 @@ class AppManageController extends Controller
             }
             return $msg;    
         }     
+    }
+    public function saveorderinfo (Request $request) {
+        if ($request->isMethod('get')) {
+            return 'Unauthorized';    
+        }
+
+        if ($request->filled('orderid')) {
+            $tableColNameMap = [
+                'orderstatus'   => 'appeal_status'
+            ];
+
+            $formdata = $request->all();
+
+            $uid = $request->orderid;
+            $order = AppOrderInfo::find($uid);
+
+            $msg = $uid;
+            $needSaveOrderinfo = false;
+
+            foreach ($formdata as $key => $value) {
+                if (array_key_exists($key,$tableColNameMap)) {
+                    if ($order->{$tableColNameMap[$key]} != $value) {
+                        $order->{$tableColNameMap[$key]} = $value;
+                        $needSaveOrderinfo = true;
+                    }
+                }
+            }
+
+            if ($needSaveOrderinfo) {
+                $order->save();    
+            }
+            return $msg;
+        }
     }
 }

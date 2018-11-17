@@ -10,6 +10,6 @@ class AppUserData extends AppBaseModel
     protected $guarded = [];
 
     public function user () {
-        return $this->belongsTo('App\Models\Admin\AppUserInfo','uuid','uuid');
+        return $this->belongsTo('App\Models\Admin\AppUserInfo','uuid','uuid');    
     }
 }
