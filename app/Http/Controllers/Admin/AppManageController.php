@@ -60,11 +60,13 @@ class AppManageController extends Controller
     public function orderlist (Request $request) {
         $orderKwTypes = [
             'Phone',
-            'UUID'
+            'UUID',
+            'Status'
         ];
         $orderTableColMap = [
             'pay_phone_sell',
-            'uuid_sell'
+            'uuid_sell',
+            'appeal_status'
         ];
 
         if ($request->filled('cid')) {
@@ -84,7 +86,16 @@ class AppManageController extends Controller
                     $kw = $request->kw;
                     $kwtype = $request->kwtype;
                     if (isset($orderTableColMap[$kwtype])) {
-                        $orders = AppOrderInfo::whereRaw($orderTableColMap[$kwtype].' like ?',[$kw.'%'])->paginate(1); 
+                        switch ($orderTableColMap[$kwtype]) {
+                            case 'appeal_status':
+                                $calculator = ' = ?';
+                                $filterValues = [$kw];
+                                break;
+                            default:    
+                                $calculator = ' like ?';
+                                $filterValues = [$kw.'%'];
+                        }
+                        $orders = AppOrderInfo::whereRaw($orderTableColMap[$kwtype].$calculator,$filterValues)->orderBy('appeal_status','asc')->paginate(1); 
                     }
                 } else {
                     $orders = AppOrderInfo::paginate(1);
@@ -93,7 +104,8 @@ class AppManageController extends Controller
                 foreach ($orders as $order) {
                     $order->appeal_status = $this->orderStatus[$order->appeal_status];
                 }
-                return view($tplName, compact('orders', 'orderKwTypes', 'kw', 'kwtype'));
+                $orderStatus = $this->orderStatus;
+                return view($tplName, compact('orders', 'orderKwTypes', 'kw', 'kwtype', 'orderStatus'));
             }
         }
     }

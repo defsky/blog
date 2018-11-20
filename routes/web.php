@@ -35,6 +35,8 @@ Route::group(['namespace'=>'Admin', 'prefix'=>'admin'], function(){
         Route::get('userinfo', 'AppManageController@userinfo');
         Route::get('orderinfo', 'AppManageController@orderinfo');
 
+        Route::get('giftbag', 'GiftBagController@index');
+
         Route::post('saveuserinfo', 'AppManageController@saveuserinfo');
         Route::post('saveorderinfo', 'AppManageController@saveorderinfo');
         Route::get('saveuserinfo', 'AppManageController@saveuserinfo');

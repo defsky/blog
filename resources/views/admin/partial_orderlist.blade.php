@@ -12,7 +12,7 @@
                                    @endforeach
                                </select>
                            </div>
-                            <div class="form-group">
+                            <div class="form-group" id="inputArea">
                                 <label class="sr-only" for="kwinput">{{ __('Keyword') }}</label>
                                 <input class="form-control" type="keyword" placeholder="{{ __('Keyword')}}" id="kwinput">
                             </div>
@@ -56,6 +56,19 @@
     
   <script>
       //custom select box
+    $('#kwtype').change(function(e) {
+        if (this.value == '2') {
+            $('#inputArea').html('<label class="sr-only" for="kwinput">{{ __('Keyword') }}</label>' + 
+            '<select class="form-control" id="kwinput" name="kwtype">' +
+                @foreach ( $orderStatus as $value => $text)
+                    '<option value="{{ $value }}">{{ __($text) }}</option>' +
+                @endforeach
+            '</select>');
+        } else {
+            $('#inputArea').html('<label class="sr-only" for="kwinput">{{ __('Keyword') }}</label>' + 
+                '<input class="form-control" type="keyword" placeholder="{{ __('Keyword')}}" id="kwinput">'); 
+        }
+    });
     $('#btn-search').click(function (e) {
         e.preventDefault();
 
@@ -99,7 +112,7 @@
 
             $.gritter.add({
                title:"系统提示",
-               text:"UUID：" + msg + "<br />订单信息保存成功!",
+               text:"订单：" + msg + "<br />保存成功!",
                image:'../assets/img/ui-danro.jpg',
                sticky:false,
                time:'' 
