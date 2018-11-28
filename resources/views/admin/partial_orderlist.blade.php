@@ -80,7 +80,11 @@
                 kwtype:$('#kwtype')[0].value
             }
         }).done(function (data) {
-            $('#orderlist').html(data);
+            if (data.status == '000000') {
+                window.location.href = window.location.origin + '/admin/login';    
+            } else {
+                $('#orderlist').html(data);
+            }
         }).fail(function () {
             $.gritter.add({
                title:"系统错误",

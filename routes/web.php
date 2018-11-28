@@ -35,17 +35,22 @@ Route::group(['namespace'=>'Admin', 'prefix'=>'admin'], function(){
         Route::get('userinfo', 'AppManageController@userinfo');
         Route::get('orderinfo', 'AppManageController@orderinfo');
 
-        Route::get('giftbag', 'GiftBagController@index');
-
         Route::post('saveuserinfo', 'AppManageController@saveuserinfo');
         Route::post('saveorderinfo', 'AppManageController@saveorderinfo');
         Route::get('saveuserinfo', 'AppManageController@saveuserinfo');
 
-        Route::get('sysconfig', 'HomeController@sysconfig');
-        Route::get('sysuser', 'HomeController@sysuser');
+        Route::get('sysconfig', 'SystemManageController@sysconfig');
+        Route::get('sysuser', 'SystemManageController@sysuser');
+        Route::get('sysuserinfo', 'SystemManageController@sysuserinfo');
+        Route::post('savesysuserinfo', 'SystemManageController@savesysuserinfo');
+        Route::post('addsysuser', 'SystemManageController@addsysuser');
+        Route::post('delsysuser', 'SystemManageController@delsysuser');
+
         Route::get('general', 'HomeController@general');
         Route::get('buttons', 'HomeController@buttons');
         Route::get('panels', 'HomeController@panels');
+
+        Route::get('giftbag', 'GiftBagController@index');
 
     });
 });

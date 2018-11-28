@@ -13,16 +13,6 @@ class HomeController extends Controller
         return view('admin.dashboard');
     }
 
-    public function sysconfig()
-    {
-        return view('admin.partial_sysconfig');
-    }
-
-    public function sysuser()
-    {
-        return view('admin.partial_sysuser');
-    }
-
     public function general()
     {
         return view('admin.partial_general');

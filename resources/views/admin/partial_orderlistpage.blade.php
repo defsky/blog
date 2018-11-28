@@ -57,7 +57,11 @@
             url :'/admin/orderinfo',
             data : {uid:$uid}
         }).done(function (data) {
-            $('#orderinfopanel').html(data);
+            if (data.status == '000000') {
+                window.location.href = window.location.origin + '/admin/login';
+            } else {
+                $('#orderinfopanel').html(data);
+            }
         }).fail(function () {
             $.gritter.add({
                title:"系统提示",
@@ -85,7 +89,11 @@
            @endif
            }
        }).done(function (data) {
-           $('#orderlist').html(data);
+            if (data.status == '000000') {
+                window.location.href = window.location.origin + '/admin/login';    
+            } else {
+                $('#orderlist').html(data);
+            }
        }).fail(function () {
            $.gritter.add({
               title:'系统提示',

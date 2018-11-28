@@ -1,16 +1,11 @@
 	                    <table class="table table-hover">
 	                        <thead>
 	                        <tr>
-	                            <th>{{ __('UUID') }}</th>
-	                            <th>{{ __('Phone Number') }}</th>
-	                            <th>{{ __('Invite Code') }}</th>
-	                            <th>{{ __('Nickname') }}</th>
-	                            <th>{{ __('User Type') }}</th>
-	                            <th>{{ __('Credit Level') }}</th>
-	                            <th>{{ __('Activity Coin') }}</th>
-	                            <th>{{ __('Original Coin') }}</th>
-	                            <th>{{ __('Activity Value') }}</th>
-	                            <th>{{ __('Yesterday Activity') }}</th>
+	                            <th>{{ __('ID') }}</th>
+	                            <th>{{ __('Name') }}</th>
+	                            <th>{{ __('Email') }}</th>
+	                            <th>{{ __('Created At') }}</th>
+	                            <th>{{ __('Updated At') }}</th>
 	                            <th>{{ __('Actions') }}</th>
 	                        </tr>
 	                        </thead>
@@ -21,22 +16,21 @@
                             @else
                                 @foreach ($users as $user)
 
-	                            <tr id="user{{ $user->number }}">
-	                                <td>{{ $user->uuid }}</td>
-	                                <td>{{ $user->phone }}</td>
-	                                <td>{{ $user->invate_code }}</td>
-	                                <td>{{ $user->nick_name }}</td>
-	                                <td>{{ $user->user_type }}</td>
-	                                <td>{{ $user->data->credit }}</td>
-	                                <td>{{ $user->data->activity_coin }}</td>
-	                                <td>{{ $user->data->original_coin }}</td>
-	                                <td>{{ $user->data->activity }}</td>
-	                                <td>{{ $user->data->yesterday_activity }}</td>
+	                            <tr id="user{{ $user->id }}">
+	                                <td>{{ $user->id }}</td>
+	                                <td>{{ $user->name }}</td>
+	                                <td>{{ $user->email }}</td>
+	                                <td>{{ $user->created_at }}</td>
+	                                <td>{{ $user->updated_at }}</td>
                                     <td>
                                         <button class="btn btn-primary btn-xs btn-useredt"
                                             data-toggle="modal"
                                             data-target="#userinfoModal"
-                                            data-id="{{ $user->number }}"><i class="fa fa-pencil"></i></button>
+                                            data-id="{{ $user->id }}"><i class="fa fa-pencil"></i></button>
+                                        <button class="btn btn-danger btn-xs btn-deluser"
+                                            data-toggle="modal"
+                                            data-target="#confirmModal"
+                                            data-id="{{ $user->id }}"><i class="fa fa-trash-o"></i></button>
                                     </td>
 	                            </tr>
 
@@ -49,16 +43,20 @@
 
   <script>
       //custom select box
+    $('#userlist .btn-deluser').click(function (e) {
+        $uid = $(this).data('id');
+        $('#duid').val($uid);
+    });
 
     $('#userlist .btn-useredt').click(function (e) {
         $uid = $(this).data('id');
 
         $.ajax({
-            url :'/admin/userinfo',
+            url :'/admin/sysuserinfo',
             data : {uid:$uid}
         }).done(function (data) {
             if (data.status == '000000') {
-                window.location.href = window.location.origin + '/admin/login';
+                window.location.href = window.location.origin + '/admin/login';    
             } else {
                 $('#userinfopanel').html(data);
             }

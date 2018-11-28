@@ -1,25 +1,19 @@
 	                    <table class="table table-hover">
 	                        <thead>
 	                        <tr>
-	                            <th>{{ __('UUID') }}</th>
-	                            <th>{{ __('Phone Number') }}</th>
-	                            <th>{{ __('Invite Code') }}</th>
-	                            <th>{{ __('Nickname') }}</th>
-	                            <th>{{ __('User Type') }}</th>
-	                            <th>{{ __('Credit Level') }}</th>
-	                            <th>{{ __('Activity Coin') }}</th>
-	                            <th>{{ __('Original Coin') }}</th>
-	                            <th>{{ __('Activity Value') }}</th>
-	                            <th>{{ __('Yesterday Activity') }}</th>
+	                            <th>{{ __('Bag ID') }}</th>
+	                            <th>{{ __('Bag Name') }}</th>
+	                            <th>{{ __('Bag Duration') }}</th>
+	                            <th>{{ __('Usable Times') }}</th>
 	                            <th>{{ __('Actions') }}</th>
 	                        </tr>
 	                        </thead>
 	                        <tbody>
 
-                            @if (0 == sizeof($users))
+                            @if (0 == sizeof($bags))
                                 <tr><td colspan="11" class="centered">{{ __('No Data') }}</td></tr>
                             @else
-                                @foreach ($users as $user)
+                                @foreach ($bags as $bag)
 
 	                            <tr id="user{{ $user->number }}">
 	                                <td>{{ $user->uuid }}</td>
@@ -45,23 +39,18 @@
 	                        </tbody>
 	                    </table>
 
-                        {{ $users->onEachSide(5)->links() }}
 
   <script>
       //custom select box
 
-    $('#userlist .btn-useredt').click(function (e) {
+    $('#giftbaglist .btn-bagedt').click(function (e) {
         $uid = $(this).data('id');
 
         $.ajax({
-            url :'/admin/userinfo',
+            url :'/admin/giftbaginfo',
             data : {uid:$uid}
         }).done(function (data) {
-            if (data.status == '000000') {
-                window.location.href = window.location.origin + '/admin/login';
-            } else {
-                $('#userinfopanel').html(data);
-            }
+            $('#userinfopanel').html(data);
         }).fail(function () {
             $.gritter.add({
                title:"系统错误",
@@ -73,27 +62,23 @@
         });
     });
      
-    $('#userlist .pagination a').click(function (e) {
+    $('#giftbaglist .pagination a').click(function (e) {
        e.preventDefault();
        var url=$(this).attr('href');
 
-       $('#userlist').append('\<div class="overlay"\> \<i class="fa fa-refresh fa-spin"\>\<\/i\> \<\/div\>');
+       $('#giftbaglist').append('\<div class="overlay"\> \<i class="fa fa-refresh fa-spin"\>\<\/i\> \<\/div\>');
 
        $.ajax({
            url :url,
            data : {
-               cid:'userlist',
+               cid:'giftbaglist',
                @if ('' != $kw)
                kw:'{{ $kw }}',
                kwtype:'{{ $kwtype }}'
                @endif
            }
        }).done(function (data) {
-            if (data.status == '000000') {
-                window.location.href = window.location.origin + '/admin/login';    
-            } else {
-                $('#userlist').html(data);
-            }
+           $('#giftbaglist').html(data);
        }).fail(function () {
            $.gritter.add({
               title:'Server Error',

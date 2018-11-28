@@ -116,7 +116,11 @@
                             url:'/admin/' + $path,
                             data:{cid:'module'}
                         }).done(function (content) {
-                            $('#main-content').html(content);
+                            if (content.status == '000000') {
+                                window.location.href = window.location.origin + '/admin/login';    
+                            } else {
+                                $('#main-content').html(content);
+                            }
                         }).fail(function () {
                             $.gritter.add({
                                 title:'系统错误',

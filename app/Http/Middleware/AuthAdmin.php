@@ -24,7 +24,13 @@ class AuthAdmin
             }
             else
             {
-                return redirect()->guest('admin/login');
+                if ($request->ajax()) {
+                    return response()->json([
+                        'status' => '000000'
+                    ]);
+                } else {
+                    return redirect()->guest('admin/login');
+                }
             }
         }
 
