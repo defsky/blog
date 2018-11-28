@@ -46,10 +46,10 @@ class AppManageController extends Controller
                     $kw = $request->kw;
                     $kwtype = $request->kwtype;
                     if (isset($userTableColMap[$kwtype])) {
-                        $users = AppUserInfo::whereRaw($userTableColMap[$kwtype].' like ?',[$kw.'%'])->paginate(3); 
+                        $users = AppUserInfo::whereRaw($userTableColMap[$kwtype].' like ?',[$kw.'%'])->paginate(10); 
                     }
                 } else {
-                    $users = AppUserInfo::paginate(3);
+                    $users = AppUserInfo::paginate(10);
                 }
                 return view($tplName, compact('users', 'userKwTypes', 'kw', 'kwtype'));
             }
@@ -95,10 +95,10 @@ class AppManageController extends Controller
                                 $calculator = ' like ?';
                                 $filterValues = [$kw.'%'];
                         }
-                        $orders = AppOrderInfo::whereRaw($orderTableColMap[$kwtype].$calculator,$filterValues)->orderBy('appeal_status','asc')->paginate(1); 
+                        $orders = AppOrderInfo::whereRaw($orderTableColMap[$kwtype].$calculator,$filterValues)->orderBy('appeal_status','asc')->paginate(10); 
                     }
                 } else {
-                    $orders = AppOrderInfo::paginate(1);
+                    $orders = AppOrderInfo::paginate(10);
                 }
 
                 foreach ($orders as $order) {

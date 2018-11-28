@@ -1,10 +1,15 @@
 	                    <table class="table table-hover">
 	                        <thead>
 	                        <tr>
-	                            <th>{{ __('Bag ID') }}</th>
+	                            <th>{{ __('Bag Code') }}</th>
 	                            <th>{{ __('Bag Name') }}</th>
-	                            <th>{{ __('Bag Duration') }}</th>
-	                            <th>{{ __('Usable Times') }}</th>
+	                            <th>{{ __('Bag Type') }}</th>
+	                            <th>{{ __('Bag Reward') }}</th>
+	                            <th>{{ __('Bag Usable Times') }}</th>
+	                            <th>{{ __('Bag Owner') }}</th>
+	                            <th>{{ __('Is Valid') }}</th>
+	                            <th>{{ __('Bag Begin Date') }}</th>
+	                            <th>{{ __('Bag End Date') }}</th>
 	                            <th>{{ __('Actions') }}</th>
 	                        </tr>
 	                        </thead>
@@ -15,22 +20,21 @@
                             @else
                                 @foreach ($bags as $bag)
 
-	                            <tr id="user{{ $user->number }}">
-	                                <td>{{ $user->uuid }}</td>
-	                                <td>{{ $user->phone }}</td>
-	                                <td>{{ $user->invate_code }}</td>
-	                                <td>{{ $user->nick_name }}</td>
-	                                <td>{{ $user->user_type }}</td>
-	                                <td>{{ $user->data->credit }}</td>
-	                                <td>{{ $user->data->activity_coin }}</td>
-	                                <td>{{ $user->data->original_coin }}</td>
-	                                <td>{{ $user->data->activity }}</td>
-	                                <td>{{ $user->data->yesterday_activity }}</td>
+	                            <tr id="{{ $bag->code }}">
+	                                <td>{{ $bag->code }}</td>
+	                                <td>{{ $bag->name }}</td>
+	                                <td>{{ __($bag->type) }}</td>
+	                                <td>{{ $bag->reward }}</td>
+	                                <td>{{ $bag->number }}</td>
+	                                <td>{{ $bag->owner }}</td>
+	                                <td>{{ __($bag->valid) }}</td>
+	                                <td>{{ $bag->beginDate }}</td>
+	                                <td>{{ $bag->endDate }}</td>
                                     <td>
-                                        <button class="btn btn-primary btn-xs btn-useredt"
+                                        <button class="btn btn-danger btn-xs btn-deletebag"
                                             data-toggle="modal"
                                             data-target="#userinfoModal"
-                                            data-id="{{ $user->number }}"><i class="fa fa-pencil"></i></button>
+                                            data-id="{{ $bag->code }}"><i class="fa fa-trash-o"></i></button>
                                     </td>
 	                            </tr>
 
