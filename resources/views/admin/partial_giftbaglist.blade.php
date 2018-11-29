@@ -28,8 +28,8 @@
 	                                <td>{{ $bag->number }}</td>
 	                                <td>{{ $bag->owner }}</td>
 	                                <td>{{ __($bag->valid) }}</td>
-	                                <td>{{ $bag->beginDate }}</td>
-	                                <td>{{ $bag->endDate }}</td>
+	                                <td>{{ date('Y-m-d',strtotime($bag->beginDate)) }}</td>
+	                                <td>{{ date('Y-m-d',strtotime($bag->endDate)) }}</td>
                                     <td>
                                         <button class="btn btn-danger btn-xs btn-deletebag"
                                             data-toggle="modal"

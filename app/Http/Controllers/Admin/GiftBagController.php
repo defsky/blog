@@ -11,21 +11,21 @@ use App\Models\Admin\GiftBagInfo;
 class GiftBagController extends Controller
 {
     //
-    protected $giftbagApiUrl;
+    protected static $giftbagApiUrl;
 
-    protected $bagTypes = [
+    protected static $bagTypes = [
         'Activity Coin',
         'Original Coin',
         'Activity Value'
     ];
-    protected $bagStatus = [
+    protected static $bagStatus = [
         1 => 'Yes',
         0 => 'No'
     ];
     
     public function __construct () {
-        $api_config = (object)config('api.giftbag');
-        $this->giftbagApiUrl = 'http://'.$api_config->host.':'.$api_config->port.$api_config->path;    
+        $api_config = config('api.giftbag');
+        self::$giftbagApiUrl = 'http://'.$api_config['host'].':'.$api_config['port'].$api_config['path'];    
     }
 
     public function index (Request $request) {
@@ -41,14 +41,14 @@ class GiftBagController extends Controller
             $bags = [];
             $kw = '';
             $kwtype = '';
-            $bagTypes = $this->bagTypes;
+            $bagTypes = self::$bagTypes;
             $userid = Auth::guard('admin')->id();
 
             $bags = GiftBagInfo::paginate(15);
 
             foreach ($bags as $bag) {
-                $bag->type = $this->bagTypes[$bag->type];
-                $bag->valid = $this->bagStatus[$bag->valid];    
+                $bag->type = self::$bagTypes[$bag->type];
+                $bag->valid = self::$bagStatus[$bag->valid];    
             }
 
             return view($tplName,compact('bags', 'kw', 'kwtype', 'userid', 'bagTypes'));    
@@ -65,7 +65,7 @@ class GiftBagController extends Controller
         $data['reward'] = (double)$data['reward'];
 
         try {
-            $result = json_decode($this->send_post($this->giftbagApiUrl, $data));
+            $result = json_decode($this->send_post(self::$giftbagApiUrl, $data));
             $result = $result ? $result->Response : (object)[];
         } catch (\Exception $e) {
             $result = (object)[
@@ -83,7 +83,7 @@ class GiftBagController extends Controller
         $data['fun'] = 1;
        
         try {
-            $result = json_decode($this->send_post($this->giftbagApiUrl, $data));
+            $result = json_decode($this->send_post(self::$giftbagApiUrl, $data));
             $result = $result ? $result->Response : (object)[];
         } catch (\Exception $e) {
             $result = (object)[
