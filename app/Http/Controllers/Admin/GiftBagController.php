@@ -11,7 +11,7 @@ use App\Models\Admin\GiftBagInfo;
 class GiftBagController extends Controller
 {
     //
-    protected $createGiftbagUrl = 'http://localhost:6880/create_giftcode.php';
+    protected $giftbagApiUrl;
 
     protected $bagTypes = [
         'Activity Coin',
@@ -22,34 +22,54 @@ class GiftBagController extends Controller
         1 => 'Yes',
         0 => 'No'
     ];
+    
+    public function __construct () {
+        $api_config = (object)config('api.giftbag');
+        $this->giftbagApiUrl = 'http://'.$api_config->host.':'.$api_config->port.$api_config->path;    
+    }
 
     public function index (Request $request) {
-        $bags = [];
-        $kw = '';
-        $kwtype = '';
-        $bagTypes = $this->bagTypes;
-        $userid = Auth::guard('admin')->id();
+        if ($request->filled('cid')) {
+            $cid = $request->cid;    
 
-        $bags = GiftBagInfo::all();
+            if ($cid == 'module') {
+                $tplName = 'admin.partial_giftbag';    
+            } else if ($cid == 'giftbaglist'){
+                $tplName = 'admin.partial_giftbaglist';    
+            }
 
-        foreach ($bags as $bag) {
-            $bag->type = $this->bagTypes[$bag->type];
-            $bag->valid = $this->bagStatus[$bag->valid];    
+            $bags = [];
+            $kw = '';
+            $kwtype = '';
+            $bagTypes = $this->bagTypes;
+            $userid = Auth::guard('admin')->id();
+
+            $bags = GiftBagInfo::paginate(15);
+
+            foreach ($bags as $bag) {
+                $bag->type = $this->bagTypes[$bag->type];
+                $bag->valid = $this->bagStatus[$bag->valid];    
+            }
+
+            return view($tplName,compact('bags', 'kw', 'kwtype', 'userid', 'bagTypes'));    
         }
-
-        return view('admin.partial_giftbag',compact('bags', 'kw', 'kwtype', 'userid', 'bagTypes'));    
     }
     public function creategiftbag (Request $request) {
         $data = $request->except(['_token']);
         $data['beginDate'] = date('Ymd', strtotime($data['beginDate']));
         $data['endDate'] = date('Ymd', strtotime($data['endDate']));
         $data['fun'] = 0;
+        $data['number'] = (int)$data['number'];
+        $data['type'] = (int)$data['type'];
+        $data['count'] = (int)$data['count'];
+        $data['reward'] = (double)$data['reward'];
 
         try {
-            $result = json_decode($this->send_post($this->createGiftbagUrl, $data));
+            $result = json_decode($this->send_post($this->giftbagApiUrl, $data));
+            $result = $result ? $result->Response : (object)[];
         } catch (\Exception $e) {
             $result = (object)[
-                'ret'   => 1,
+                'ret'   => 99,
                 'msg'   => $e->getMessage(),
                 'code'  => $e->getCode()
             ];
@@ -63,10 +83,11 @@ class GiftBagController extends Controller
         $data['fun'] = 1;
        
         try {
-            $result = json_decode($this->send_post($this->createGiftbagUrl, $data));
+            $result = json_decode($this->send_post($this->giftbagApiUrl, $data));
+            $result = $result ? $result->Response : (object)[];
         } catch (\Exception $e) {
             $result = (object)[
-                'ret'   => 1,
+                'ret'   => 99,
                 'msg'   => $e->getMessage(),
                 'code'  => $e->getCode()
             ];
@@ -83,13 +104,15 @@ class GiftBagController extends Controller
     }
 
     protected function send_post($url, $post_data) {
-        $data = http_build_query($post_data);
+        //$data = http_build_query($post_data);
+        $data = json_encode($post_data);
         $options = [
             'http'  => [
                 'method'    => 'POST',
-                'header'    => 'Content-type:application/x-www-form-urlencoded',
+                //'header'    => 'Content-type:application/x-www-form-urlencoded',
+                'header'    => "Content-type: application/json",
                 'content'   => $data,
-                'timeout'   => 15 * 60
+                'timeout'   => 10
             ]
         ];    
 

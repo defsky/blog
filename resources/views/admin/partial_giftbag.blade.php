@@ -115,7 +115,7 @@
                     <div id="delbaginfopanel">
                         <form class="form-horizontal style-form" id="form-delbaginfo" action="">
                             @csrf
-                            <input type="hidden" value="" name="code" id="bagidcontainer">
+                            <input type="hidden" value="" name="codes" id="bagidcontainer">
                         </form>
 			            <p>{{ __('Are you sure to delete this giftbag?')}}</p>
                     </div>
@@ -147,6 +147,9 @@
                 window.location.href = window.location.origin + '/admin/login';
             } else {
                 if (data.ret == 0) {
+                    $rid = $('#bagidcontainer')[0].value;
+                    $('#'+$rid).remove();
+
                     $.gritter.add({
                        title:"系统提示",
                        text:"礼包删除成功!<br>"+data.msg ,
@@ -181,6 +184,7 @@
     });
 
     $('#btn-createnewbag').click(function (e) {
+        $(this).attr('disabled',true);
         $data = $('#form-newbaginfo').serializeArray();
 
         $.ajax({
@@ -224,6 +228,7 @@
                time:'' 
             });    
         });
+        $(this).attr('disabled',false);
     });
       $(function(){
           $('select.styled').customSelect();

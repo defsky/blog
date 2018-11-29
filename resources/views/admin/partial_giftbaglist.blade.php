@@ -42,6 +42,7 @@
 	                        </tbody>
 	                    </table>
 
+                        {{ $bags->onEachSide(5)->links() }}
 
   <script>
       //custom select box
