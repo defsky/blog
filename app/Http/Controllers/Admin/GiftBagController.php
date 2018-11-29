@@ -11,7 +11,7 @@ use App\Models\Admin\GiftBagInfo;
 class GiftBagController extends Controller
 {
     //
-    protected $createGiftbagUrl = 'http://60.255.50.136:6880/create_giftcode.php';
+    protected $createGiftbagUrl = 'http://localhost:6880/create_giftcode.php';
 
     protected $bagTypes = [
         'Activity Coin',
@@ -39,17 +39,47 @@ class GiftBagController extends Controller
 
         return view('admin.partial_giftbag',compact('bags', 'kw', 'kwtype', 'userid', 'bagTypes'));    
     }
-    public function createGiftBag (Request $request) {
+    public function creategiftbag (Request $request) {
         $data = $request->except(['_token']);
+        $data['beginDate'] = date('Ymd', strtotime($data['beginDate']));
+        $data['endDate'] = date('Ymd', strtotime($data['endDate']));
         $data['fun'] = 0;
-return $data;
 
-        $result = json_decode($this->send_post($this->createGiftbagUrl, $data));
+        try {
+            $result = json_decode($this->send_post($this->createGiftbagUrl, $data));
+        } catch (\Exception $e) {
+            $result = (object)[
+                'ret'   => 1,
+                'msg'   => $e->getMessage(),
+                'code'  => $e->getCode()
+            ];
+        }
 
-        return Response()->json([
-            'ret'       => $result->ret,
-            'msg'       => $result->msg
-        ]);
+        return Response()->json($result);
+    }
+
+    public function deletegiftbag (Request $request) {
+        $data = $request->except (['_token']);
+        $data['fun'] = 1;
+       
+        try {
+            $result = json_decode($this->send_post($this->createGiftbagUrl, $data));
+        } catch (\Exception $e) {
+            $result = (object)[
+                'ret'   => 1,
+                'msg'   => $e->getMessage(),
+                'code'  => $e->getCode()
+            ];
+        }
+
+        if ($result) {
+            return response()->json($result);
+        } else {    
+            return response()->json([
+                'ret'   => 1,
+                'msg'   => 'api returned null'
+            ]);    
+        }
     }
 
     protected function send_post($url, $post_data) {
@@ -64,7 +94,7 @@ return $data;
         ];    
 
         $context = stream_context_create($options);
-        $result = file_get_contexts($url, false, $context);
+        $result = file_get_contents($url, false, $context);
 
         return $result;
     }

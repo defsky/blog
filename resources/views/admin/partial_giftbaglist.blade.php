@@ -24,7 +24,7 @@
 	                                <td>{{ $bag->code }}</td>
 	                                <td>{{ $bag->name }}</td>
 	                                <td>{{ __($bag->type) }}</td>
-	                                <td>{{ $bag->reward }}</td>
+	                                <td>{{ number_format($bag->reward,4) }}</td>
 	                                <td>{{ $bag->number }}</td>
 	                                <td>{{ $bag->owner }}</td>
 	                                <td>{{ __($bag->valid) }}</td>
@@ -33,7 +33,6 @@
                                     <td>
                                         <button class="btn btn-danger btn-xs btn-deletebag"
                                             data-toggle="modal"
-                                            data-target="#userinfoModal"
                                             data-id="{{ $bag->code }}"><i class="fa fa-trash-o"></i></button>
                                     </td>
 	                            </tr>
@@ -47,23 +46,11 @@
   <script>
       //custom select box
 
-    $('#giftbaglist .btn-bagedt').click(function (e) {
+    $('#giftbaglist .btn-deletebag').click(function (e) {
         $uid = $(this).data('id');
 
-        $.ajax({
-            url :'/admin/giftbaginfo',
-            data : {uid:$uid}
-        }).done(function (data) {
-            $('#userinfopanel').html(data);
-        }).fail(function () {
-            $.gritter.add({
-               title:"系统错误",
-               text:"加载用户信息失败",
-               image:'../assets/img/ui-danro.jpg',
-               sticky:false,
-               time:'' 
-            });    
-        });
+        $('#bagidcontainer').val($uid);
+        $('#delbagConfirmModal').modal('show');
     });
      
     $('#giftbaglist .pagination a').click(function (e) {

@@ -103,12 +103,77 @@
 			    </div>
 			  </div>
 			</div>      				
+			<!--Confirm Modal -->
+			<div class="modal fade" id="delbagConfirmModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			        <h4 class="modal-title" id="myModalLabel">{{ __('Delete Giftbag')}}</h4>
+			      </div>
+			      <div class="modal-body">
+                    <div id="delbaginfopanel">
+                        <form class="form-horizontal style-form" id="form-delbaginfo" action="">
+                            @csrf
+                            <input type="hidden" value="" name="code" id="bagidcontainer">
+                        </form>
+			            <p>{{ __('Are you sure to delete this giftbag?')}}</p>
+                    </div>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">{{ __('Close') }}</button>
+			        <button type="button" class="btn btn-danger" id="btn-dodeletebag">{{ __('Delete') }}</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>      				
 		</section><! --/wrapper -->
 
     <!--script for this page-->
     
   <script>
       //custom select box
+    $('#btn-dodeletebag').click(function (e) {
+        e.preventDefault();
+        $('#delbagConfirmModal').modal('hide');    
+        $data = $('#form-delbaginfo').serializeArray();
+
+        $.ajax({
+            type:'POST',
+            url :'/admin/deletegiftbag',
+            data : $data,
+        }).done(function (data) {
+            if (data.status == "000000") {
+                window.location.href = window.location.origin + '/admin/login';
+            } else {
+                if (data.ret == 0) {
+                    $.gritter.add({
+                       title:"系统提示",
+                       text:"礼包删除成功!<br>"+data.msg ,
+                       image:'../assets/img/ui-danro.jpg',
+                       sticky:false,
+                       time:'' 
+                    });   
+                } else {
+                    $.gritter.add({
+                       title:"系统提示",
+                       text:"礼包删除失败!<br>" + data.msg,
+                       image:'../assets/img/ui-danro.jpg',
+                       sticky:false,
+                       time:'' 
+                    });   
+                }
+            }
+        }).fail(function (data) {
+            $.gritter.add({
+               title:"系统提示",
+               text:"礼包删除失败<br>" ,
+               image:'../assets/img/ui-danro.jpg',
+               sticky:false,
+               time:'' 
+            });    
+        });
+    });
 
     $('#btn-createbag').click(function (e) {
         e.preventDefault();
