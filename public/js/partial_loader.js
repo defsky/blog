@@ -12,3 +12,11 @@ $.ajaxSetup({
 //        $('#main-content').html(content);
 //    }); 
 //});
+
+$.ieDown = url => {
+    window.open(url);    
+};
+$.isIE = () => {
+    const explorer = window.navigator.userAgent;
+    return explorer.indexOf('MSIE') >= 0 || explorer.indexOf('Trident/7.0') >= 0 || explorer.indexOf('Edge') >= 0;    
+};

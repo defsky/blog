@@ -5,6 +5,15 @@
                     <div class="form-panel">
                         <form class="form-inline" role="form" id="form-searchuser">
                             <div class="form-group">
+                                <button class="btn btn-danger"
+                                    data-toggle="modal"
+                                    id="btn-delSelected"><i class="fa fa-trash-o"></i>{{ ' '.__('Delete Selected') }}</button>
+                            </div>
+                            <div class="form-group">
+                                <a class="btn btn-theme" href="/admin/giftcodeexport">{{ __('Export List').' '}}<i class="fa fa-download"></i></a>
+                                <!--<button class="btn btn-theme pull-right" id="btn-exportcodes">{{ __('Export List').' ' }}<i class="fa fa-download"></i></button>-->
+                            </div>
+                            <div class="form-group">
                                 <button class="btn btn-theme"
                                     data-toggle="modal"
                                     id="btn-createbag"><i class="fa fa-plus"></i>{{ ' '.__('Create Giftbag') }}</button>
@@ -117,7 +126,7 @@
                             @csrf
                             <input type="hidden" value="" name="codes" id="bagidcontainer">
                         </form>
-			            <p>{{ __('Are you sure to delete this giftbag?')}}</p>
+			            <p>{{ __('Are you sure to delete selected giftbags?')}}</p>
                     </div>
 			      </div>
 			      <div class="modal-footer">
@@ -133,6 +142,54 @@
     
   <script>
       //custom select box
+    $('#btn-delSelected').click(function (e) {
+        e.preventDefault();
+        $values = "";
+        $('#bagidcontainer').val($values);
+        $('#giftbaglist table .rowselector').each(function () {
+            if ($(this).is(':checked')) {
+           if ($values != "") {
+                $values += ':';   
+            }
+            $values += $(this).parent().parent().attr('id');
+            }
+        });
+        $('#bagidcontainer').val($values);
+
+        if ($values != "") {
+            $('#delbagConfirmModal').modal('show');
+        }
+    });
+
+    $('#btn-exportcodes').click(function (e) {
+        e.preventDefault();
+        var url = '/admin/giftcodeexport';
+
+        if ($.isIE()) {
+            $.ieDown(window.location.origin + url);
+        } else {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', url, true);
+            xhr.responseType = "blob";
+            xhr.onload = function () {
+                if (this.status === 200) {
+                    var blob = this.response;
+                    var reader = new FileReader();
+                    reader.readAsDataURL(blob);
+                    reader.onload = function (e) {
+                        var a = document.createElement('a');
+                        a.download = '礼包码.xlsx';
+                        a.href = e.target.result;
+                        $('body').append(a);
+                        a.click();
+                        $(a).remove();    
+                    }    
+                }    
+            }
+            xhr.send();
+        }
+    });
+
     $('#btn-dodeletebag').click(function (e) {
         e.preventDefault();
         $('#delbagConfirmModal').modal('hide');    
@@ -148,7 +205,9 @@
             } else {
                 if (data.ret == 0) {
                     $rid = $('#bagidcontainer')[0].value;
-                    $('#'+$rid).remove();
+                    $.each($rid.split(':'),function(k,v){
+                       $('#'+v).remove(); 
+                    });
 
                     $.gritter.add({
                        title:"系统提示",

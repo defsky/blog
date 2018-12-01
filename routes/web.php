@@ -53,5 +53,6 @@ Route::group(['namespace'=>'Admin', 'prefix'=>'admin'], function(){
         Route::get('giftbag', 'GiftBagController@index');
         Route::post('creategiftbag', 'GiftBagController@creategiftbag');
         Route::post('deletegiftbag', 'GiftBagController@deletegiftbag');
+        Route::get('giftcodeexport', 'GiftBagController@giftcode_export');
     });
 });

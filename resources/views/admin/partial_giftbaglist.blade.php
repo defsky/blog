@@ -1,6 +1,7 @@
 	                    <table class="table table-hover">
 	                        <thead>
 	                        <tr>
+	                            <th><a class="btn btn-inverse btn-xs" id="selectall">{{ __('Select All') }}</a></th>
 	                            <th>{{ __('Bag Code') }}</th>
 	                            <th>{{ __('Bag Name') }}</th>
 	                            <th>{{ __('Bag Type') }}</th>
@@ -21,6 +22,7 @@
                                 @foreach ($bags as $bag)
 
 	                            <tr id="{{ $bag->code }}">
+                                    <td><input class="rowselector" type="checkbox" value></td>
 	                                <td>{{ $bag->code }}</td>
 	                                <td>{{ $bag->name }}</td>
 	                                <td>{{ __($bag->type) }}</td>
@@ -46,10 +48,28 @@
 
   <script>
       //custom select box
+    $.baglistIsAllSelected = false;
+    $('#selectall').click(function (e) {
+        $selectors = $('#giftbaglist table .rowselector');
+        if ($.baglistIsAllSelected) {
+            $selectors.each(function(){
+                $(this).attr('checked', false); 
+            });
+            $.baglistIsAllSelected = false;
+            $(this).removeClass('btn-success');
+        } else {
+            $selectors.each(function () {
+                 $(this).attr('checked', true);   
+             });
+            $.baglistIsAllSelected = true;
+            $(this).addClass('btn-success');
+        }
+    });
 
     $('#giftbaglist .btn-deletebag').click(function (e) {
         $uid = $(this).data('id');
-
+        
+        $('#'+$uid+' input').attr('checked',true);
         $('#bagidcontainer').val($uid);
         $('#delbagConfirmModal').modal('show');
     });

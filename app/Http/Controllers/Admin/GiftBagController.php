@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Support\Facades\Auth;
 
+use App\Exports\GiftcodeExport;
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\GiftBagInfo;
@@ -13,16 +15,6 @@ class GiftBagController extends Controller
     //
     protected static $giftbagApiUrl;
 
-    protected static $bagTypes = [
-        'Activity Coin',
-        'Original Coin',
-        'Activity Value'
-    ];
-    protected static $bagStatus = [
-        1 => 'Yes',
-        0 => 'No'
-    ];
-    
     public function __construct () {
         $api_config = config('api.giftbag');
         self::$giftbagApiUrl = 'http://'.$api_config['host'].':'.$api_config['port'].$api_config['path'];    
@@ -41,14 +33,14 @@ class GiftBagController extends Controller
             $bags = [];
             $kw = '';
             $kwtype = '';
-            $bagTypes = self::$bagTypes;
+            $bagTypes = GiftBagInfo::BAG_TYPES;
             $userid = Auth::guard('admin')->id();
 
-            $bags = GiftBagInfo::paginate(15);
+            $bags = GiftBagInfo::orderby('name')->paginate(15);
 
             foreach ($bags as $bag) {
-                $bag->type = self::$bagTypes[$bag->type];
-                $bag->valid = self::$bagStatus[$bag->valid];    
+                $bag->type = GiftBagInfo::BAG_TYPES[$bag->type];
+                $bag->valid = GiftBagInfo::BAG_STATUS[$bag->valid];    
             }
 
             return view($tplName,compact('bags', 'kw', 'kwtype', 'userid', 'bagTypes'));    
@@ -101,6 +93,10 @@ class GiftBagController extends Controller
                 'msg'   => 'api returned null'
             ]);    
         }
+    }
+
+    public function giftcode_export () {
+        return (new GiftcodeExport)->download('giftcode.xlsx');
     }
 
     protected function send_post($url, $post_data) {
