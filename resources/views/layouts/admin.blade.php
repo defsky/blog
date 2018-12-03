@@ -245,6 +245,7 @@
                           <li><a data-path="userlist" href="#">{{ __('User List') }}</a></li>
                           <li><a data-path="orderlist" href="#">{{ __('Order List') }}</a></li>
                           <li><a data-path="giftbag" href="#">{{ __('Gift Bag Manage') }}</a></li>
+                          <li><a data-path="gameroom" href="#">{{ __('Game Room Manage') }}</a></li>
                       </ul>
                   </li>
 
