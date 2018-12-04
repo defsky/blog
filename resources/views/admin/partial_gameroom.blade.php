@@ -45,6 +45,12 @@
                                 <form class="form-horizontal style-form" id="form-newroominfo" action="">
                                     @csrf
                                     <div class="form-group">
+                                        <label class="col-sm-3 control-label" for="">{{ __("Room Name") }}</label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" name="name" placeholder="{{ __('Input Room Name')}}" type="text" requested>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
                                         <label class="col-sm-3 control-label" for="">{{ __("Room Type") }}</label>
                                         <div class="col-sm-9">
                                             <select class="form-control" id="appidselector" name="appid">

@@ -3,6 +3,7 @@
 	                        <tr>
 	                            <th><a class="btn btn-inverse btn-xs" id="selectall">{{ __('Select All') }}</a></th>
 	                            <th>{{ __('Room ID') }}</th>
+	                            <th>{{ __('Room Name') }}</th>
 	                            <th>{{ __('Room Type') }}</th>
 	                            <th>{{ __('Room Owner') }}</th>
 	                            <th>{{ __('Fee Count') }}</th>
@@ -23,6 +24,7 @@
 	                            <tr id="{{ $room->roomid }}">
                                     <td><input class="rowselector" type="checkbox" value></td>
 	                                <td>{{ $room->roomid }}</td>
+	                                <td>{{ $room->name }}</td>
 	                                <td>{{ $room->appid }}</td>
 	                                <td>{{ $room->owner }}</td>
 	                                <td>{{ $room->fee == 0 ? __('No Fee') : $room->fee.' '.__($room->fee_type) }}</td>
