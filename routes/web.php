@@ -41,6 +41,8 @@ Route::group(['namespace'=>'Admin', 'prefix'=>'admin'], function(){
 
         Route::get('sysconfig', 'SystemManageController@sysconfig');
         Route::get('sysuser', 'SystemManageController@sysuser');
+        Route::get('sysupgrade', 'SystemManageController@sysupgrade');
+        Route::post('dosysupgrade', 'SystemManageController@dosysupgrade');
         Route::get('sysuserinfo', 'SystemManageController@sysuserinfo');
         Route::post('savesysuserinfo', 'SystemManageController@savesysuserinfo');
         Route::post('addsysuser', 'SystemManageController@addsysuser');

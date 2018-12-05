@@ -233,6 +233,7 @@
                       <ul class="sub">
                           <li><a data-path="sysconfig" href="#">{{ __('System Settings') }}</a></li>
                           <li><a data-path="sysuser" href="#">{{ __('User Manage') }}</a></li>
+                          <li><a data-path="sysupgrade" href="#">{{ __('System Upgrade') }}</a></li>
                       </ul>
                   </li>
 

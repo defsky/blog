@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\Administrator;
+use Illuminate\Support\Facades\Storage;
+use \PharData;
 
 class SystemManageController extends Controller
 {
@@ -12,6 +14,48 @@ class SystemManageController extends Controller
     public function sysconfig()
     {
         return view('admin.partial_sysconfig');
+    }
+
+    public function sysupgrade() {
+        return view('admin.partial_sysupgrade');    
+    }
+
+    public function dosysupgrade(Request $request) {
+        $file = $request->file('patchfile');
+        if ($file) {
+            $originalName = $file->getClientOriginalName();
+            $ext = $file->getClientOriginalExtension();
+            $realPath = $file->getRealPath();
+            $type = $file->getClientMimeType();
+            
+            $filename = date('YmdHis',strtotime('+8 hour')).'_'.uniqid().'.tar.'.$ext;
+
+            //$bool = Storage::disk('upgrades')->put($filename, file_get_contents($realPath));
+            $newpath = $file->storeAs('',$filename,'upgrades');
+
+            if ($newpath) {
+                $phar = new PharData(storage_path().'/app/upgrades/'.$newpath);
+                $phar->extractTo(base_path(), null, true);    
+            }
+            return Response()->json([
+                'ret'   => 0,
+                'msg'   => 'upload file :'.$filename,
+                'basePath'=>base_path(),
+                'spath' => $newpath,
+                'tmpPath'=> $realPath,
+                'origin'=> [
+                    'filename'  => $originalName,
+                    'ext'       => $ext,
+                    'type'      => $type
+                ]
+            ]);
+        } else {
+            return Response()->json([
+                'ret'   => 0,
+                'msg'   => 'no file',
+            ]);
+                
+        }
     }
 
     public function savesysuserinfo (Request $request) {
