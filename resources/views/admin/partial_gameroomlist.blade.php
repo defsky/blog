@@ -1,7 +1,7 @@
 	                    <table class="table table-hover">
 	                        <thead>
 	                        <tr>
-	                            <th><a class="btn btn-inverse btn-xs" id="selectall">{{ __('Select All') }}</a></th>
+	                            <th style="width:50px"><a class="btn btn-inverse btn-xs" id="selectall"><strong>{{ __('Select All') }}</strong></a></th>
 	                            <th>{{ __('Room ID') }}</th>
 	                            <th>{{ __('Room Name') }}</th>
 	                            <th>{{ __('Room Type') }}</th>
@@ -9,6 +9,7 @@
 	                            <th>{{ __('Fee Count') }}</th>
 	                            <th>{{ __('Valid Member Count') }}</th>
 	                            <th>{{ __('Current Members') }}</th>
+	                            <th>{{ __('Game Server') }}</th>
 	                            <th>{{ __('Start Time') }}</th>
 	                            <th>{{ __('Room Status') }}</th>
 	                            <th>{{ __('Actions') }}</th>
@@ -22,7 +23,7 @@
                                 @foreach ($rooms as $room)
 
 	                            <tr id="{{ $room->roomid }}">
-                                    <td><input class="rowselector" type="checkbox" value></td>
+                                    <td class="centered"><input class="rowselector" type="checkbox" value></td>
 	                                <td>{{ $room->roomid }}</td>
 	                                <td>{{ $room->name }}</td>
 	                                <td>{{ $room->appid }}</td>
@@ -30,6 +31,7 @@
 	                                <td>{{ $room->fee == 0 ? __('No Fee') : $room->fee.' '.__($room->fee_type) }}</td>
 	                                <td>{{ $room->min_number.' - '.$room->max_number }}</td>
 	                                <td>{{ $room->cur_number }}</td>
+	                                <td>{{ $room->gameserver }}</td>
 	                                <td>{{ $room->time }}</td>
 	                                <td>{{ $room->status }}</td>
                                     <td>

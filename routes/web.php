@@ -55,7 +55,7 @@ Route::group(['namespace'=>'Admin', 'prefix'=>'admin'], function(){
         Route::post('deletegiftbag', 'GiftBagController@deletegiftbag');
         Route::get('giftcodeexport', 'GiftBagController@giftcode_export');
 
-        Route::get('roomapi', 'GameRoomController@testapi');
+        Route::get('testapi', 'GameRoomController@testapi');
         Route::get('gameroom', 'GameRoomController@index');
         Route::post('creategameroom', 'GameRoomController@createroom');
         Route::post('deletegameroom', 'GameRoomController@deleteroom');

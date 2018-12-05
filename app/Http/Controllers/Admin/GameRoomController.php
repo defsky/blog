@@ -40,7 +40,7 @@ class GameRoomController extends Controller
                 $roomTypes[$app->appid] = $app->name;
             }
 
-            $rooms = GameRoomInfo::paginate(15);
+            $rooms = GameRoomInfo::orderBy('appid','desc')->paginate(15);
 
             foreach ($rooms as $room) {
                 $room->fee_type = $feeTypes[$room->fee_type];
@@ -58,6 +58,7 @@ class GameRoomController extends Controller
         $data['fee_type'] = (int)$data['fee_type'];
         $data['maxNumber'] = (int)$data['maxNumber'];
         $data['minNumber'] = (int)$data['minNumber'];
+        $data['time'] = date('H:i',strtotime($data['time']));
 
         try {
             $result = WebAPI::post($data, $this->apiurl);
@@ -92,7 +93,7 @@ class GameRoomController extends Controller
     }
 
     public function testapi () {
-
+        $url = 'http://api.tswvc.com/do.php';
         $data = [
             'fun'   => 0,
             'time'  => '19:30:00',
@@ -103,7 +104,21 @@ class GameRoomController extends Controller
             'maxNumber'=> 150,
             'minNumber'=> 30,
         ];
+        
+        $data2 = [
+            'gameserver'    => 1,
+            'accounts'      => [
+                [
+                    'account'   => 'ccc',
+                    'password'  => '111'
+                ],
+                [
+                    'account'   => 'ddd',
+                    'password'  => '222'
+                ]
+            ]
+        ];
 
-        return Response()->json(WebAPI::post($data, $this->apiurl));
+        return Response()->json(WebAPI::post($data2, $url));
     }
 }

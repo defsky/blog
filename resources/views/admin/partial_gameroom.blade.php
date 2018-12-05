@@ -95,9 +95,15 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
+                                        <label class="col-sm-3 control-label" for="">{{ __("Game Server") }}</label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" name="gameserver" placeholder="{{ __('Input Game Server')}}" type="text" requested>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
                                         <label class="col-sm-3 control-label" for="">{{ __("Start Time") }}</label>
                                         <div class="col-sm-9">
-                                            <input class="form-control" name="time" value="{{ date('H:i:s',strtotime('+11 hour')) }}"placeholder="{{ __('Input End Date')}}" type="text" requested>
+                                            <input class="form-control" name="time" value="{{ date('H:i',strtotime('+11 hour')) }}"placeholder="{{ __('Input End Date')}}" type="text" requested>
                                         </div>
                                     </div>
                                 </form>
