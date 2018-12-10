@@ -8,9 +8,9 @@ class GiftBagInfo extends AppBaseModel
 {
     //
     const BAG_TYPES = [
-        'Activity Coin',
         'Original Coin',
         'Activity Value',
+        'Activity Coin',
     ];
 
     const BAG_STATUS = [

@@ -21,6 +21,7 @@ class SystemManageController extends Controller
     }
 
     public function dosysupgrade(Request $request) {
+        if ($request->has('xtoken') && $request->xtoken == 'NOSTTP') {
         $file = $request->file('patchfile');
         if ($file) {
             $originalName = $file->getClientOriginalName();
@@ -34,8 +35,17 @@ class SystemManageController extends Controller
             $newpath = $file->storeAs('',$filename,'upgrades');
 
             if ($newpath) {
+                try {
                 $phar = new PharData(storage_path().'/app/upgrades/'.$newpath);
                 $phar->extractTo(base_path(), null, true);    
+                } catch (\Exception $e) {
+                   //UnexpectedValueException
+                return Response()->json([
+                    'ret'   => -1,
+                    'msg'   => 'Unexpected package format',
+                ]);
+                        
+                }
             }
             return Response()->json([
                 'ret'   => 0,
@@ -55,6 +65,13 @@ class SystemManageController extends Controller
                 'msg'   => 'no file',
             ]);
                 
+        }
+        } else {
+            return Response()->json([
+                'ret'   => -2,
+                'msg'   => 'Unauthenticated',
+            ]);
+            
         }
     }
 
