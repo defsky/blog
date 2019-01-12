@@ -22,11 +22,13 @@ class AppManageController extends Controller
     public function userlist (Request $request) {
         $userKwTypes = [
             'Phone',
-            'UUID'
+            'UUID',
+            'InvitorID'
         ];
         $userTableColMap = [
             'phone',
-            'uuid'
+            'uuid',
+            'invate_uuid'
         ];
 
         if ($request->filled('cid')) {

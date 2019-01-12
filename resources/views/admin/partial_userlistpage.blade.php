@@ -11,6 +11,7 @@
 	                            <th>{{ __('Original Coin') }}</th>
 	                            <th>{{ __('Activity Value') }}</th>
 	                            <th>{{ __('Yesterday Activity') }}</th>
+                                <th>{{ __('InvitorID') }}</th>
 	                            <th>{{ __('Actions') }}</th>
 	                        </tr>
 	                        </thead>
@@ -32,6 +33,7 @@
 	                                <td>{{ $user->data->original_coin }}</td>
 	                                <td>{{ $user->data->activity }}</td>
 	                                <td>{{ $user->data->yesterday_activity }}</td>
+                                    <td>{{ $user->invate_uuid }}</td>
                                     <td>
                                         <button class="btn btn-primary btn-xs btn-useredt"
                                             data-toggle="modal"
