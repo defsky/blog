@@ -21,7 +21,9 @@ class SystemManageController extends Controller
     }
 
     public function dosysupgrade(Request $request) {
-        if ($request->has('xtoken') && $request->xtoken == 'NOSTTP') {
+        $xtoken = config('app.system_update_token');
+
+        if ($request->has('xtoken') && md5($request->xtoken) == $xtoken) {
         $file = $request->file('patchfile');
         if ($file) {
             $originalName = $file->getClientOriginalName();

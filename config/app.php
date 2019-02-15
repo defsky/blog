@@ -229,4 +229,10 @@ return [
 
     ],
 
+    /*
+    |
+    | token for system update
+    |
+    */
+    'system_update_token'  => env('SYSTEM_UPDATE_TOKEN', 'cdb9fa2464d099f0470a163df4e9c566'),
 ];

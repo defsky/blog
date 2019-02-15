@@ -14,7 +14,7 @@ class WebApiService implements WebApiContract
                 //'header'    => 'Content-type:application/x-www-form-urlencoded',
                 'header'    => "Content-type: application/json",
                 'content'   => $post_data,
-                'timeout'   => 10
+                'timeout'   => 60 * 5
             ]
         ];    
 
@@ -24,7 +24,22 @@ class WebApiService implements WebApiContract
         return json_decode($result);
     }
     
-    public function get($url, $header = []) {
-        throw new \Exception('function need to be defined');    
+    public function get($url, $params, $header = []) {
+        //throw new \Exception('function need to be defined');  
+        $query_params = http_build_query($params);
+        $options = [
+            'http'  => [
+                'method'    => 'GET',
+                'header'    => 'Content-type:application/x-www-form-urlencoded',
+                //'header'    => "Content-type: application/json",
+                'content'   => $query_params,
+                'timeout'   => 60 * 5
+            ]
+        ];    
+
+        $context = stream_context_create($options);
+        $result = file_get_contents($url, false, $context);
+
+        return json_decode($result);  
     }    
 }
