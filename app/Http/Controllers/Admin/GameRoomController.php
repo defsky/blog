@@ -55,6 +55,7 @@ class GameRoomController extends Controller
         $data['fun'] = 0;
         $data['count'] = (int)$data['count'];
         $data['fee'] = (double)$data['fee'];
+        //$data['zanzhu_fee'] = (double)$data['zanzhu_fee'];
         $data['fee_type'] = (int)$data['fee_type'];
         $data['maxNumber'] = (int)$data['maxNumber'];
         $data['minNumber'] = (int)$data['minNumber'];

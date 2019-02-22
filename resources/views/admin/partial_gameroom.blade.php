@@ -82,6 +82,12 @@
                                             <input class="form-control" name="fee" placeholder="{{ __('Input Fee Count')}}" type="text" requested>
                                         </div>
                                     </div>
+                                    <!--div class="form-group">
+                                        <label class="col-sm-3 control-label" for="">{{ __("Sponsor Fee") }}</label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" name="zanzhu_fee" placeholder="{{ __('Input Sponsor Fee')}}" type="text" requested>
+                                        </div>
+                                    </div-->
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label" for="">{{ __("Max Members") }}</label>
                                         <div class="col-sm-9">
@@ -97,7 +103,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label" for="">{{ __("Game Server") }}</label>
                                         <div class="col-sm-9">
-                                            <input class="form-control" name="gameserver" placeholder="{{ __('Input Game Server')}}" type="text" requested>
+                                            <input class="form-control" name="gameserver" placeholder="{{ __('Input Game Server ID')}}" type="text" requested>
                                         </div>
                                     </div>
                                     <div class="form-group">

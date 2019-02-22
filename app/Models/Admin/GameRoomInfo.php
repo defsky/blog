@@ -4,7 +4,7 @@ namespace App\Models\Admin;
 
 use Illuminate\Database\Eloquent\Model;
 
-class GameRoomInfo extends AppBaseModel
+class GameRoomInfo extends ThirdAppBaseModel
 {
     //
     const ROOM_STATUS = [

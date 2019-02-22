@@ -5,7 +5,7 @@ namespace App\Models\Admin;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Admin\AppBaseModel;
 
-class AppData extends AppBaseModel
+class AppData extends ThirdAppBaseModel
 {
     //
     protected $table = 'app_data';

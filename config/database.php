@@ -72,6 +72,22 @@ return [
             'engine' => null,
         ],
 
+        'mysql_thirdapp' => [
+            'driver' => 'mysql',
+            'host' => env('DB_HOST_THIRD_APP', '127.0.0.1'),
+            'port' => env('DB_PORT_THIRD_APP', '3306'),
+            'database' => env('DB_DATABASE_THIRD_APP', 'forge'),
+            'username' => env('DB_USERNAME_THIRD_APP', 'forge'),
+            'password' => env('DB_PASSWORD_THIRD_APP', ''),
+            'unix_socket' => env('DB_SOCKET_THIRD_APP', ''),
+            'charset' => 'utf8',
+            'collation' => 'utf8_general_ci',
+            'prefix' => env('DB_PREFIX_THIRD_APP',''),
+            'prefix_indexes' => true,
+            'strict' => true,
+            'engine' => null,
+        ],
+
         'pgsql' => [
             'driver' => 'pgsql',
             'host' => env('DB_HOST', '127.0.0.1'),

@@ -7,6 +7,7 @@
 	                            <th>{{ __('Room Type') }}</th>
 	                            <th>{{ __('Room Owner') }}</th>
 	                            <th>{{ __('Fee Count') }}</th>
+                                <th>{{ __('Sponsor Fee') }}</th>
 	                            <th>{{ __('Valid Member Count') }}</th>
 	                            <th>{{ __('Current Members') }}</th>
 	                            <th>{{ __('Game Server') }}</th>
@@ -29,9 +30,10 @@
 	                                <td>{{ $room->appid }}</td>
 	                                <td>{{ $room->owner }}</td>
 	                                <td>{{ $room->fee == 0 ? __('No Fee') : $room->fee.' '.__($room->fee_type) }}</td>
+                                    <td>{{ $room->zanzhu_fee }}</td>
 	                                <td>{{ $room->min_number.' - '.$room->max_number }}</td>
 	                                <td>{{ $room->cur_number }}</td>
-	                                <td>{{ $room->gameserver }}</td>
+	                                <td>{{ $room->gameserver }}区</td>
 	                                <td>{{ $room->time }}</td>
 	                                <td>{{ $room->status }}</td>
                                     <td>
