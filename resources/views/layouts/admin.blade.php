@@ -10,11 +10,12 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'TSWVC').' - '.__('Backstage') }}</title>
+    <title>{{ config('app.name', 'Sunhoo').' - '.__('Backstage') }}</title>
 
     <!-- Bootstrap core CSS -->
     <link href="assets/css/bootstrap.css" rel="stylesheet">
     <!--external css-->
+    <!--link href="https://cdn.bootcss.com/font-awesome/5.8.2/css/all.min.css" rel="stylesheet"-->
     <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="assets/css/zabuto_calendar.css">
     <link rel="stylesheet" type="text/css" href="assets/js/gritter/css/jquery.gritter.css" />
@@ -24,6 +25,7 @@
     <link href="assets/css/style.css" rel="stylesheet">
     <link href="assets/css/style-responsive.css" rel="stylesheet">
 
+    <script src="https://cdn.bootcss.com/font-awesome/5.8.2/js/all.min.js"></script>
     <script src="assets/js/chart-master/Chart.js"></script>
     
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -227,7 +229,7 @@
 
                   <li class="sub-menu">
                       <a href="javascript:;" >
-                          <i class="fa fa-desktop"></i>
+                          <i class="fa fa-server"></i>
                           <span>{{ __('System Manage') }}</span>
                       </a>
                       <ul class="sub">
@@ -239,14 +241,11 @@
 
                   <li class="sub-menu">
                       <a href="javascript:;" >
-                          <i class=" fa fa-android"></i>
-                          <span>{{ __('APP Maintaining')}}</span>
+                          <i class="fa fa-file"></i>
+                          <span>{{ __('Content Maintaining')}}</span>
                       </a>
                       <ul class="sub">
-                          <li><a data-path="userlist" href="#">{{ __('User List') }}</a></li>
-                          <li><a data-path="orderlist" href="#">{{ __('Order List') }}</a></li>
-                          <li><a data-path="giftbag" href="#">{{ __('Gift Bag Manage') }}</a></li>
-                          <li><a data-path="gameroom" href="#">{{ __('Game Room Manage') }}</a></li>
+                          <li><a data-path="portallinks" href="#">{{ __('Portal Links') }}</a></li>
                       </ul>
                   </li>
 
@@ -261,59 +260,6 @@
                           <li><a data-path="panels"  href="#">{{ __('Panels') }}</a></li>
                       </ul>
                   </li>
-<!--
-                  <li class="sub-menu">
-                      <a href="javascript:;" >
-                          <i class="fa fa-cogs"></i>
-                          <span>Components</span>
-                      </a>
-                      <ul class="sub">
-                          <li><a  href="calendar.html">Calendar</a></li>
-                          <li><a  href="gallery.html">Gallery</a></li>
-                          <li><a  href="todo_list.html">Todo List</a></li>
-                      </ul>
-                  </li>
-                  <li class="sub-menu">
-                      <a href="javascript:;" >
-                          <i class="fa fa-book"></i>
-                          <span>Extra Pages</span>
-                      </a>
-                      <ul class="sub">
-                          <li><a  href="blank.html">Blank Page</a></li>
-                          <li><a  href="login.html">Login</a></li>
-                          <li><a  href="lock_screen.html">Lock Screen</a></li>
-                      </ul>
-                  </li>
-                  <li class="sub-menu">
-                      <a href="javascript:;" >
-                          <i class="fa fa-tasks"></i>
-                          <span>Forms</span>
-                      </a>
-                      <ul class="sub">
-                          <li><a  href="form_component.html">Form Components</a></li>
-                      </ul>
-                  </li>
-                  <li class="sub-menu">
-                      <a href="javascript:;" >
-                          <i class="fa fa-th"></i>
-                          <span>Data Tables</span>
-                      </a>
-                      <ul class="sub">
-                          <li><a  href="basic_table.html">Basic Table</a></li>
-                          <li><a  href="responsive_table.html">Responsive Table</a></li>
-                      </ul>
-                  </li>
-                  <li class="sub-menu">
-                      <a href="javascript:;" >
-                          <i class=" fa fa-bar-chart-o"></i>
-                          <span>Charts</span>
-                      </a>
-                      <ul class="sub">
-                          <li><a  href="morris.html">Morris</a></li>
-                          <li><a  href="chartjs.html">Chartjs</a></li>
-                      </ul>
-                  </li>
--->
               </ul>
               <!-- sidebar menu end-->
           </div>
@@ -334,7 +280,7 @@
       <!--footer start-->
       <footer class="site-footer">
           <div class="text-center">
-              2018 - TSWVC  <a href="http://www.tswvc.com/" target="_blank">{{ __('The Second World')}}</a>
+              2018 - Sunhoo  <a href="http://www.tswvc.com/" target="_blank">{{ __('System Manage')}}</a>
               <a href="#" class="go-top">
                   <i class="fa fa-angle-up"></i>
               </a>

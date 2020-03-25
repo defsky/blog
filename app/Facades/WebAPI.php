@@ -8,4 +8,3 @@ class WebAPI extends Facade {
         return 'WebApiService';    
     }    
 }
-?>
