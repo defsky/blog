@@ -15,6 +15,15 @@ Route::get('/', function () {
     return view('index');
 });
 
+Route::get('/dashboard',function(){
+    return view('dashboard');
+});
+
+Route::group(['namespace' => 'API', 'prefix' => 'dashboard'], function(){
+    Route::get('getac','Dashboard@getac');
+    Route::get('getachist','Dashboard@getachist');
+});
+
 //Route::get('/', 'HomeController@index');
 
 Auth::routes();

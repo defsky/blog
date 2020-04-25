@@ -82,8 +82,8 @@
                     <td><a href="http://192.168.100.124/" target="_blank">图纸查看系统(内)</a></td>
                     <td><a id="u92" href="http://www.sun-hoo.cn:8097/" target="_blank">用友U9系统</a></td>
                     <td><a href="#" id="app1" data-toggle="popover" data-placement="top" data-original-title="" title="">双虎集团公众号</a></td>
-                    <td></td>
-                    <td></td>
+                    <td><a href="http://192.168.100.210:9002/minio" target="_blank">Minio Browser</a></td>
+                    <td><a href="http://192.168.100.119:8000/dashboard" target="_blank">Dashboard</a></td>
                 </tr>
                 <tr>
                     <td><a href="http://www.sun-hoo.cn:6688" target="_blank">营销管理系统</a></td>
@@ -95,7 +95,7 @@
             </tbody>
         </table>
 </div>
-        
+
 <script type="text/javascript">
     $('#app1').popover({
         trigger: 'hover', //鼠标以上时触发弹出提示框

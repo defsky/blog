@@ -22,7 +22,9 @@
     "dependencies": {
         "ajv": "^6.7.0",
         "babel-polyfill": "^6.26.0",
+        "echarts": "^4.7.0",
         "es6-promise": "^4.2.5",
-        "imagemin": "^6.1.0"
+        "imagemin": "^6.1.0",
+        "v-charts": "^1.19.0"
     }
 }
