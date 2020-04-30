@@ -21,8 +21,8 @@ Vue.prototype.axios = axios
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
 
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
 Vue.component('temperature', require('./components/Temperature.vue'));
+Vue.component('appstatus', require('./components/AppStatus.vue'));
 Vue.component('dashboard', require('./components/Dashboard.vue'));
 
 // const files = require.context('./', true, /\.vue$/i)
@@ -38,7 +38,6 @@ Vue.component('dashboard', require('./components/Dashboard.vue'));
  */
 
 Vue.use(VCharts)
-
 
 const app = new Vue({
     el: '#app'
