@@ -34,7 +34,7 @@
 	                                <td>{{ $room->min_number.' - '.$room->max_number }}</td>
 	                                <td>{{ $room->cur_number }}</td>
 	                                <td>{{ $room->gameserver }}区</td>
-	                                <td>{{ $room->time }}</td>
+	                                <td>{{ substr($room->time,0,2).':'.substr($room->time,2,2) }}</td>
 	                                <td>{{ $room->status }}</td>
                                     <td>
                                         <button class="btn btn-danger btn-xs btn-deleteroom"
