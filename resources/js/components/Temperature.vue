@@ -21,7 +21,7 @@
       return {
         chartData: {
             line:{
-                columns: ['时间', '空调温度'],
+                columns: ['时间', '实时温度','平均温度'],
                 rows: this.datarows
             },
             gauge:{
@@ -135,7 +135,8 @@
 
             }
         }).then(function(res){
-            var currentData = Number(res.data.celsius)
+            var currentData = Number(res.data.real)
+            var currentAvg = Number(res.data.avg)
             var nowTime = new Date()
 
             if (that.datarows.length > 360) {
@@ -143,7 +144,7 @@
             }
 
             that.gaugeRows[0].value = currentData
-            that.datarows.push({'时间': nowTime.toLocaleTimeString(), '空调温度': currentData})
+            that.datarows.push({'时间': nowTime.toLocaleTimeString(), '实时温度': currentData,'平均温度':currentAvg})
 
         }).catch(function (error) {
             console.log(error);
@@ -158,10 +159,12 @@
         axios.get('dashboard/getachist').then(function(res){
             var nowTime = new Date()
             var temp = 0
+            var avg = 0
 
             res.data.forEach(element => {
-                temp = element.celsius
-                that.datarows.unshift({'时间': nowTime.toLocaleTimeString(), '空调温度': temp})
+                temp = element.real
+                avg = element.avg
+                that.datarows.unshift({'时间': nowTime.toLocaleTimeString(), '实时温度': temp,'平均温度':avg})
                 nowTime.setTime(nowTime.getTime() - 5000)
             });
             

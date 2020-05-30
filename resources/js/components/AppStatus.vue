@@ -17,7 +17,7 @@
       return {
         chartData: {
             line:{
-                columns: ['时间', '抛单'],
+                columns: ['时间', '抛单状态','抛单队列'],
                 rows: this.datarows
             },
         },
@@ -32,8 +32,8 @@
                 }
             },
             line:{
-                metrics: ['抛单'],
-                dimension: ['时间'],
+                axisSite: { right: ['抛单队列'] },
+                yAxisName: ['状态', '队列'],
                 type: this.typeArr[this.index],
                 min:[0],
                 max:[2]
@@ -51,13 +51,14 @@
             }
         }).then(function(res){
             var paodanStatus = Number(res.data.paodan)
+            var paodanQlen = Number(res.data.qlen)
             var nowTime = new Date()
 
             if (that.datarows.length > 360) {
                 that.datarows.shift()
             }
 
-            that.datarows.push({'时间': nowTime.toLocaleTimeString(), '抛单': paodanStatus})
+            that.datarows.push({'时间': nowTime.toLocaleTimeString(), '抛单状态': paodanStatus, '抛单队列':paodanQlen})
 
         }).catch(function (error) {
             console.log(error);

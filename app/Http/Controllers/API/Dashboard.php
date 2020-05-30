@@ -16,10 +16,12 @@ class Dashboard extends Controller
     public function getac()
     {
         $t = Redis::get('dashboard:ac:temperature');
+        $avgt = Redis::get('dashboard:ac:avg');
         $alive = Redis::get('dashboard:ac:alive');
 
         return response()->json([
-            'celsius' => $t,
+            'real' => $t,
+            'avg' => $avgt,
             'alive' => $alive
         ]);
     }
@@ -31,15 +33,18 @@ class Dashboard extends Controller
      */
     public function getachist()
     {
-        // reserve last 120 records
-        Redis::ltrim('dashboard:ac:history',0,360);
-
         $datas = [];
 
-        $data = Redis::lrange('dashboard:ac:history',0,360);
-        
-        foreach($data as $v){
-            array_unshift($datas,['celsius'=>$v,'alive'=>1]);
+        $data = Redis::lrange('dashboard:ac:history',0,359);
+        $avgdata = Redis::lrange('dashboard:ac:history:avg',0,359);
+
+        foreach($data as $v) {
+            array_push($datas,['real'=>$v,'avg'=>0,'alive'=>1]);
+        }
+
+        $idx = 0;
+        foreach($avgdata as $avgv) {
+            $datas[$idx++]['avg'] = $avgv;
         }
 
         return response()->json($datas);
@@ -54,9 +59,11 @@ class Dashboard extends Controller
     {
         // reserve last 120 records
         $paodanStatus = Redis::get('dashboard:erp:store:u9daemon:alive');
+        $qlen = Redis::get('dashboard:erp:store:u9daemon:qlen');
         
         $data = [
-            'paodan'=>$paodanStatus
+            'paodan'=>$paodanStatus,
+            'qlen' => $qlen
         ];
 
         return response()->json($data);

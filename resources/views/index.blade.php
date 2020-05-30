@@ -90,7 +90,7 @@
                     <td><a id="u91" href="http://192.168.100.75/" target="_blank">用友U9系统(内)</a></td>
                     <td><a href="#" id="app2" data-toggle="popover" data-placement="top" data-original-title="" title="">双虎集团微博</a></td>
                     <td><a href="http://192.168.100.119:8888/" target="_blank">Jupyter Notebook</a></td>
-                    <td></td>
+                    <td><a href="http://192.168.100.132:8088/" target="_blank">BioSecurity</a></td>
                 </tr>
             </tbody>
         </table>
