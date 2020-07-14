@@ -70,6 +70,34 @@ class Dashboard extends Controller
     }
 
     /**
+     * Get recent bad doc data.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getbaddoc()
+    {
+        // reserve last 120 records
+        $baddoc = Redis::get('dashboard:baddoc');
+
+        return response($baddoc, 200)
+                  ->header('Content-Type', 'application/json');
+    }
+
+    /**
+     * Get recent bad doc data.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getvalue(Request $request)
+    {
+        $keyname = $request["key"];
+        $data = Redis::get($keyname);
+
+        return response($data, 200)
+                  ->header('Content-Type', 'application/json');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response

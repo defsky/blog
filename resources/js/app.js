@@ -7,11 +7,14 @@
 
 require('./bootstrap');
 
-import VCharts from 'v-charts';
 import axios from 'axios';
+import VCharts from 'v-charts';
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css'
 
 window.Vue = require('vue');
 Vue.prototype.axios = axios
+Vue.use(ElementUI)
 
 /**
  * The following block of code may be used to automatically register your
@@ -23,6 +26,7 @@ Vue.prototype.axios = axios
 
 Vue.component('temperature', require('./components/Temperature.vue'));
 Vue.component('appstatus', require('./components/AppStatus.vue'));
+Vue.component('baddoc', require('./components/BadDoc.vue'));
 Vue.component('dashboard', require('./components/Dashboard.vue'));
 
 // const files = require.context('./', true, /\.vue$/i)

@@ -9,6 +9,9 @@
         <div class="col-md-6">
             <appstatus />
         </div>
+        <div class="col-md-6">
+            <baddoc />
+        </div>
     </div>
 </div>
 </template>

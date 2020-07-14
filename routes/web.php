@@ -23,6 +23,8 @@ Route::group(['namespace' => 'API', 'prefix' => 'dashboard'], function(){
     Route::get('getac','Dashboard@getac');
     Route::get('getachist','Dashboard@getachist');
     Route::get('getstatus','Dashboard@getstatus');
+    Route::get('getbaddoc','Dashboard@getbaddoc');
+    Route::get('getvalue','Dashboard@getvalue');
 });
 
 //Route::get('/', 'HomeController@index');

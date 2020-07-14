@@ -23,6 +23,7 @@
         "ajv": "^6.12.2",
         "babel-polyfill": "^6.26.0",
         "echarts": "^4.7.0",
+        "element-ui": "^2.13.2",
         "es6-promise": "^4.2.8",
         "imagemin": "^6.1.0",
         "v-charts": "^1.19.0",
