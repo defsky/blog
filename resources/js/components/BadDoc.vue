@@ -10,12 +10,24 @@
             </ve-histogram>
         </div>
     </div>
-    <el-dialog
-      title="详细信息"
+    <el-dialog :title="tableTitle" width="40%"
       :visible.sync="dialogVisible"
-      width="30%"
       :before-close="handleClose">
-      <span>这是一段信息</span>
+      <el-table
+        :data="tableData"
+        height="250"
+        border
+        style="width: 100%">
+        <el-table-column
+          v-for="(obj,idx) in tableColName"
+          :key="idx"
+          :label="obj.name"
+          :width="obj.width">
+          <template slot-scope="scope">
+            {{scope.row[idx]}}
+          </template>
+        </el-table-column>
+      </el-table>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
@@ -29,11 +41,16 @@
   export default {
     data () {
       this.datarows = []
+      this.drillkeys={}
       return {
-        dialogVisible:false,
+        tableTitle:"详细信息",
+        dialogVisible: false,
+        tableColName: [],
+        tableData: [],
+        contentWidth:100,
         chartData: {
             histogram:{
-                columns: ['类型', '数量','drillkey'],
+                columns: ['类型', '问题单据数量','drillkey'],
                 rows: this.datarows
             },
         },
@@ -45,7 +62,7 @@
                 },
             },
             histogram:{
-                metrics: ['数量'],
+                metrics: ['问题单据数量'],
                 dimension: ['类型']
             },
             chartEvents:{
@@ -62,7 +79,7 @@
           })
           .catch(_ => {});
       },
-      getStatus: function(){
+      getData: function(){
         const that = this
 
         this.datarows.length = 0
@@ -74,7 +91,8 @@
             // console.log(res.data)
 
             res.data.forEach(row => {
-                that.datarows.push({'类型':row["name"],'数量':row["value"],'drillkey':row["drillkey"]})
+                that.datarows.push({'类型':row["name"],'问题单据数量':row["value"]})
+                that.drillkeys[row["name"]] = row["drillkey"]
             });
 
         }).catch(function (error) {
@@ -82,31 +100,32 @@
         });
       },
       onBarClick: function(e) {
-        console.log(e.name + " clicked")
+        // console.log(e.name + " clicked")
+        this.tableTitle = "问题单据详情-" + e.name
+        var keyname=this.drillkeys[e.name]
+
         const that = this
-        var keyname=""
-        this.datarows.forEach(row => {
-          if(row["类型"] == e.name) {
-            keyname = row["drillkey"]
-            console.log(keyname)
-          }
-        })
         axios.get('dashboard/getvalue',{
             params:{
               key:keyname
             }
         }).then(function(res){
-            console.log(res.data)
+            that.contentWidth = 100
             that.dialogVisible= true
+            that.tableColName=res.data.colNames
+            that.tableData=[].concat(res.data.data)
 
+            // console.log(that.tableData)
         }).catch(function (error) {
             console.log(error);
-        });
+        })
+  
       }
     },
     mounted() {
         const that = this
-        that.timer = setInterval(that.getStatus, 5000);
+        this.getData()
+        that.timer = setInterval(that.getData, 5000);
 
     },
     beforeDestroy() {
