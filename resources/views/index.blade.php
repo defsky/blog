@@ -37,7 +37,7 @@
                     <td><a href="http://www.sun-hoo.cn:6677/sunhooshop2/" target="_blank">门店前台订单系统</a></td>
                     <td><a href="http://192.168.100.59/sunhoo2/" target="_blank">门店管理系统-后台(内)</a></td>
                     <td><a href="http://192.168.100.51:4900/" target="_blank">整装后台管理-测试(内)</a></td>
-                    <td></td>
+                    <td><a href="http://192.168.100.140:8088/SH" target="_blank">伟伦OMS(内)</a></td>
                     <td></td>
                 </tr>
                 <tr>

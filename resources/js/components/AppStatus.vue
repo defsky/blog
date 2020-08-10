@@ -29,6 +29,10 @@
                 },
                 grid:{
                     bottom:'40%'
+                },
+                yAxis:{
+                    minInterval: 1,
+                    type: "value",
                 }
             },
             line:{

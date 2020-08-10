@@ -50,7 +50,7 @@
         contentWidth:100,
         chartData: {
             histogram:{
-                columns: ['类型', '问题单据数量','drillkey'],
+                columns: ['类型', '问题单数量','drillkey'],
                 rows: this.datarows
             },
         },
@@ -62,7 +62,7 @@
                 },
             },
             histogram:{
-                metrics: ['问题单据数量'],
+                metrics: ['问题单数量'],
                 dimension: ['类型']
             },
             chartEvents:{
@@ -82,16 +82,16 @@
       getData: function(){
         const that = this
 
-        this.datarows.length = 0
+        // this.datarows.length = 0
         axios.get('dashboard/getvalue',{
             params:{
               key:"dashboard:baddoc"
             }
         }).then(function(res){
             // console.log(res.data)
-
+            that.datarows.length = 0
             res.data.forEach(row => {
-                that.datarows.push({'类型':row["name"],'问题单据数量':row["value"]})
+                that.datarows.push({'类型':row["name"],'问题单数量':row["value"]})
                 that.drillkeys[row["name"]] = row["drillkey"]
             });
 
@@ -101,7 +101,7 @@
       },
       onBarClick: function(e) {
         // console.log(e.name + " clicked")
-        this.tableTitle = "问题单据详情-" + e.name
+        this.tableTitle = "问题单详情-" + e.name
         var keyname=this.drillkeys[e.name]
 
         const that = this
