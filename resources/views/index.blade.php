@@ -7,8 +7,11 @@
             <tbody>
                 <tr><td colspan="5" style=" height : 30px; font-size :16px; color:#00b816;">官网类</td></tr>
                 <tr>
-                    <td><a href="http://www.sun-hoo.cn/" target="_blank">集团官网中文版</a></td>
-
+                    <td><a href="http://www.sun-hoo.cn" target="_blank">双虎全屋家具官网</a></td>
+                    <td><a href="https://www.sunhoohome.com" target="_blank">双虎生活空间官网</a></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                 </tr>
             </tbody>
         </table>
@@ -44,7 +47,7 @@
                     <td><a href="http://192.168.100.59/sunhooshop2/" target="_blank">门店前台订单系统(内)</a></td>
                     <td><a href="http://192.168.100.59:8080/" target="_blank">门店管理系统(内)</a></td>
                     <td><a href="http://192.168.100.146:4900/" target="_blank">整装后台管理(内)</a></td>
-                    <td></td>
+                    <td><a href="http://192.168.100.149:8088/SH" target="_blank">伟伦OMS-测试(内)</a></td>
                     <td></td>
                 </tr>
             </tbody>
@@ -56,17 +59,16 @@
             <tbody>
                 <tr><td colspan="5" style="height : 30px; font-size :16px; color:#00b816;">办公类</td></tr>
                 <tr>
-                    
                     <td><a href="http://www.sun-hoo.cn:3333/" target="_blank">协同办公(OA)</a></td>
                     <td><a href="http:///www.sun-hoo.cn:8484/" target="_blank">人资管理(eHR)</a></td>
-                    <td><a href="http://192.168.100.119:9000" target="_blank">双虎电子阅览室(内)</a></td>
-                    <td></td>
+                    <td><a href="http://192.168.100.119:9000" target="_blank">文档中心(内)</a></td>
+                    <td><a href="http://crm.sun-hoo.cn" target="_blank">新零售OAO(CRM)-后台</a></td>
                     <td></td>
                 </tr>
                 <tr>
                     <td><a href="http://192.168.100.31/" target="_blank">协同办公(OA)(内)</a></td>
                     <td><a href="http://192.168.100.84/" target="_blank">人资管理(eHR)(内)</a></td>
-                    <td></td>
+                    <td><a href="http://192.168.100.53" target="_blank">资产清单(内)</a></td>
                     <td></td>
                     <td></td>
                 </tr>
@@ -91,6 +93,13 @@
                     <td><a href="#" id="app2" data-toggle="popover" data-placement="top" data-original-title="" title="">双虎集团微博</a></td>
                     <td><a href="http://192.168.100.119:8888/" target="_blank">Jupyter Notebook</a></td>
                     <td><a href="http://192.168.100.132:8088/" target="_blank">BioSecurity</a></td>
+                </tr>
+                <tr>
+                    <td><a href="http://crm.sun-hoo.cn/index" target="_blank">CRM获取客户IP测试</a></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                 </tr>
             </tbody>
         </table>
