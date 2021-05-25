@@ -2,6 +2,9 @@
 <div class="container">
     <div class="row ">
         <div class="col-md-12" style="background-color:#eeeeee;">
+          <el-checkbox-group v-model="checkList">
+            <el-checkbox v-for="item in checkTypes" :label="item"></el-checkbox>
+          </el-checkbox-group>
             <ve-histogram 
               :data="chartData.histogram" 
               :settings="chartSettings.histogram" 
@@ -48,6 +51,8 @@
         tableColName: [],
         tableData: [],
         contentWidth:100,
+        checkTypes:['退回处理','客户档案','重复单据','未审核单','生产订单','BOM'],
+        checkList:['退回处理','客户档案','重复单据','未审核单','生产订单','BOM'],
         chartData: {
             histogram:{
                 columns: ['类型', '问题单数量','drillkey'],
@@ -91,8 +96,14 @@
             // console.log(res.data)
             that.datarows.length = 0
             res.data.forEach(row => {
-                that.datarows.push({'类型':row["name"],'问题单数量':row["value"]})
-                that.drillkeys[row["name"]] = row["drillkey"]
+                for (let i=0;i<that.checkList.length;i++){
+                  if(that.checkList[i]==row["name"]){
+                    that.datarows.push({'类型':row["name"],'问题单数量':row["value"]})
+                    that.drillkeys[row["name"]] = row["drillkey"]
+                    break
+                  }
+                }
+
             });
 
         }).catch(function (error) {

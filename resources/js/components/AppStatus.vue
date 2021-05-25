@@ -74,22 +74,6 @@
     mounted() {
         const that = this
         that.timer = setInterval(that.getStatus, 10000);
-
-        // axios.get('dashboard/getachist').then(function(res){
-        //     var nowTime = new Date()
-        //     var temp = 0
-
-        //     res.data.forEach(element => {
-        //         temp = element.celsius
-        //         that.datarows.unshift({'时间': nowTime.toLocaleTimeString(), '空调温度': temp})
-        //         nowTime.setTime(nowTime.getTime() - 5000)
-        //     });
-            
-        //     that.gaugeRows[0].value = temp
-        //     that.timer = setInterval(that.getTemp, 5000);
-        // }).catch(function(error){
-        //     console.log(error)
-        // })
     },
     beforeDestroy() {
       clearInterval(this.timer);
